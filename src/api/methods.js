@@ -8,12 +8,12 @@ function getPublicMilestones(option = null) {
   return publicInstance.get('/Destiny2/Milestones/', option);
 }
 
-function getManifestMilestone(url) {
+function getJson(url) {
   return emptyInstance.get(url);
 }
 
 export {
   getDestinyManifest,
   getPublicMilestones,
-  getManifestMilestone,
+  getJson,
 };

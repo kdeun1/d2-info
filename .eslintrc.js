@@ -30,5 +30,6 @@ module.exports = {
         'response', // for Express responses
       ],
     }],
+    'vue/comment-directive': 'off',
   },
 };

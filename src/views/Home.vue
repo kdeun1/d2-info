@@ -1,98 +1,75 @@
 <template>
   <div class="home">
-    <h3>all manifest</h3>
-    <br>
-    {{ manifestObj.DestinyMilestoneDefinition }}
-    <br>
-    {{ manifestObj.DestinyActivityDefinition }}
-    <br>
-    {{ manifestObj.DestinyActivityModifierDefinition }}
-    <br><br><br><br><br>
     <h3>milestone</h3>
     <br>
-    {{ milestone }}
+    <el-button
+      @click="refreshMilestone"
+    >
+      주간 리셋 갱신
+    </el-button>
+    <br>
+    갱신 시간 : {{ currentTime }}
+    <br>
+    주간 리셋 시간 : {{ weeklyRange }}
+    <br>
+    <br>
+    <div
+      v-for="list in computedMilestone"
+      :key="list.milestoneHash"
+    >
+      {{ list }}
+      <br><br>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import { getDestinyManifest, getPublicMilestones, getManifestMilestone } from '@/api/methods';
+import { acceptMilestoneHash, getFormatDate, weeklyDateRange } from '@/common';
 
 export default {
   name: 'Home',
   components: {
   },
   setup() {
-    const manifestObj = reactive({
-      DestinyMilestoneDefinition: null,
-      DestinyActivityDefinition: null,
-      DestinyActivityModifierDefinition: null,
-    });
-    const milestone = ref(null);
-
+    const milestone = ref({});
+    const computedMilestone = computed(() => Object.values(milestone.value)
+      .filter((v) => acceptMilestoneHash.includes(v.milestoneHash)));
+    const currentTime = ref('');
+    const weeklyRange = ref('');
     const store = useStore();
 
-    const initManifest = async () => {
+    const initMilestone = () => {
+      console.log('Home.vue / initMilestone');
+      store
+        .dispatch('initMilestone')
+        .then(() => { console.log('SUCCESS'); })
+        .catch((e) => console.log(e));
+    };
+
+    const refreshMilestone = async () => {
+      console.log('refreshMilestone');
       try {
-        const result = await getDestinyManifest();
-        if (result?.data?.Response?.jsonWorldComponentContentPaths?.ko) {
-          await store.commit('setDestinyManifest', result.data.Response.jsonWorldComponentContentPaths.ko);
-          manifestObj.DestinyMilestoneDefinition = store.getters.getDestinyManifestByKey('DestinyMilestoneDefinition');
-          manifestObj.DestinyActivityDefinition = store.getters.getDestinyManifestByKey('DestinyActivityDefinition');
-          manifestObj.DestinyActivityModifierDefinition = store.getters.getDestinyManifestByKey('DestinyActivityModifierDefinition');
-        }
+        milestone.value = store.getters.getPublicMilestones;
       } catch (e) {
-        console.log(e);
+        console.log(`[initMilestone] ${e}`);
+      } finally {
+        currentTime.value = getFormatDate(new Date());
+        weeklyRange.value = weeklyDateRange(new Date());
       }
     };
 
-    const initMilestone = async () => {
-      try {
-        const result = await getPublicMilestones();
-        if (result?.data?.Response) {
-          await store.commit('setPublicMilestones', result.data.Response);
-          milestone.value = store.getters.getPublicMilestones;
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    const initDestinyMilestoneDefinition = async () => {
-      const result = await getManifestMilestone(manifestObj.DestinyMilestoneDefinition);
-      if (result) {
-        await store.commit('setDestinyMilestoneDefinition', result);
-      }
-    };
-
-    const initDestinyActivityDefinition = async () => {
-      const result = await getManifestMilestone(manifestObj.DestinyActivityDefinition);
-      if (result) {
-        await store.commit('setDestinyActivityDefinition', result);
-      }
-    };
-
-    const initDestinyActivityModifierDefinition = async () => {
-      const result = await getManifestMilestone(manifestObj.DestinyActivityModifierDefinition);
-      if (result) {
-        await store.commit('setDestinyActivityModifierDefinition', result);
-      }
-    };
-
-    const asyncInit = async () => {
-      await initManifest();
+    onMounted(async () => {
       await initMilestone();
-      await initDestinyMilestoneDefinition();
-      await initDestinyActivityDefinition();
-      await initDestinyActivityModifierDefinition();
-    };
-
-    asyncInit();
+    });
 
     return {
-      manifestObj,
       milestone,
+      computedMilestone,
+      refreshMilestone,
+      currentTime,
+      weeklyRange,
     };
   },
 };

@@ -1,18 +1,37 @@
 <template>
   <div class="nav">
-    123
+    HEADER
+    <router-link to="/">
+      Home
+    </router-link> |
+    <router-link to="/about">
+      About
+    </router-link>
   </div>
-  <Home />
+  <main class="main">
+    <router-view />
+  </main>
 </template>
 
 <script>
-import Home from './views/Home';
+import { useStore } from 'vuex';
 
 export default {
   components: {
-    Home,
   },
   setup() {
+    const store = useStore();
+
+    const initManifest = async () => {
+      console.log('App.vue / initManifest');
+      try {
+        await store.dispatch('initManifest');
+      } catch (e) {
+        console.log(`[App.vue] initManifest : ${e}`);
+      }
+    };
+
+    initManifest();
   },
 };
 </script>
