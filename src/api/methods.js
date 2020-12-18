@@ -1,15 +1,15 @@
-import { emptyInstance, publicInstance } from './index';
+import { baseInstance, platformInstance } from './index';
 
 function getDestinyManifest() {
-  return publicInstance.get('/Destiny2/Manifest/');
+  return platformInstance.get('/Destiny2/Manifest/');
 }
 
-function getPublicMilestones(option = null) {
-  return publicInstance.get('/Destiny2/Milestones/', option);
+function getPublicMilestones() {
+  return platformInstance.get('/Destiny2/Milestones/');
 }
 
 function getJson(url) {
-  return emptyInstance.get(url);
+  return baseInstance.get(url);
 }
 
 export {

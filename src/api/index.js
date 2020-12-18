@@ -4,15 +4,21 @@ import axios from 'axios';
 function create(url = null, options = null) {
   const instance = axios.create(
     { baseURL: url },
-    { header: { 'X-API-Key': process.env.VUE_APP_X_API_KEY }, ...options },
+    {
+      header: {
+        'X-API-Key': process.env.VUE_APP_API_KEY,
+        Connection: 'keep-alive',
+      },
+      ...options,
+    },
   );
   return instance;
 }
 
-const emptyInstance = create();
-const publicInstance = create(process.env.VUE_APP_API_URL);
+const baseInstance = create();
+const platformInstance = create(process.env.VUE_APP_API_URL);
 
 export {
-  emptyInstance,
-  publicInstance,
+  baseInstance,
+  platformInstance,
 };

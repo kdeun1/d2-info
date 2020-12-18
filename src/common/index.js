@@ -1,5 +1,3 @@
-const defaultFn = () => {};
-
 const acceptMilestoneHash = [
   1437935813,
   1942283261,
@@ -67,7 +65,6 @@ const weeklyDateRange = (date) => {
 };
 
 export {
-  defaultFn,
   acceptMilestoneHash,
   getFormatDate,
   weeklyDateRange,

@@ -5,23 +5,15 @@ const PREFIX_URL = 'https://www.bungie.net';
 
 export default createStore({
   state: {
-    destinyManifest: {},
-    publicMilestones: {},
+    destinyManifest: {}, // DB URL이 들어있는 객체
     destinyMilestoneDefinition: {},
     destinyActivityDefinition: {},
     destinyActivityModifierDefinition: {},
+    publicMilestones: {},
   },
   getters: {
     getDestinyManifest: (state) => state.destinyManifest,
-    getDestinyManifestByKey: (state) => (key) => {
-      if (!state.destinyManifest[key]) {
-        console.log('[getDestinyManifestByKey] NO DATA!');
-        return false;
-      }
-      return `${PREFIX_URL}${state.destinyManifest[key]}`;
-    },
     getPublicMilestones: (state) => state.publicMilestones,
-    getDestinyMilestoneDefinition: (state) => state.destinyMilestoneDefinition,
   },
   mutations: {
     setDestinyManifest: (state, obj) => {
@@ -41,39 +33,29 @@ export default createStore({
     },
   },
   actions: {
-    initJson: async ({ commit }, { key, url }) => {
-      const result = await getJson(url);
-      await commit(key, result);
+    initManifest: async ({ commit }) => {
+      const res = await getDestinyManifest();
+      const koContentPaths = res.data.Response.jsonWorldComponentContentPaths.ko;
+      commit('setDestinyManifest', koContentPaths);
     },
-    initManifest: async ({ commit, dispatch }) => {
-      getDestinyManifest()
-        .then((res) => {
-          const koContentPaths = res.data.Response.jsonWorldComponentContentPaths.ko;
-          const {
-            DestinyMilestoneDefinition,
-            DestinyActivityDefinition,
-            DestinyActivityModifierDefinition,
-          } = koContentPaths;
-          commit('setDestinyManifest', koContentPaths);
-          dispatch('initJson', {
-            key: 'setDestinyMilestoneDefinition',
-            url: `${PREFIX_URL}${DestinyMilestoneDefinition}`,
-          });
-          commit('setDestinyActivityDefinition', `${PREFIX_URL}${DestinyActivityDefinition}`);
-          commit('setDestinyActivityModifierDefinition', `${PREFIX_URL}${DestinyActivityModifierDefinition}`);
-        })
-        .catch((e) => {
-          console.log(`[Vuex] initManifest : ${e}`);
-        });
+    initDestinyMilestoneDefinition: async ({ state, commit }) => {
+      const { DestinyMilestoneDefinition } = state.destinyManifest;
+      const { data } = await getJson(`${PREFIX_URL}${DestinyMilestoneDefinition}`);
+      commit('setDestinyMilestoneDefinition', data);
     },
-    initMilestone: ({ commit }) => {
-      getPublicMilestones()
-        .then((res) => {
-          commit('setPublicMilestones', res.data.Response);
-        })
-        .catch((res) => {
-          console.log(`[Vuex] initMilestone : ${res}`);
-        });
+    initDestinyActivityDefinition: async ({ state, commit }) => {
+      const { DestinyActivityDefinition } = state.destinyManifest;
+      const { data } = await getJson(`${PREFIX_URL}${DestinyActivityDefinition}`);
+      commit('setDestinyActivityDefinition', data);
+    },
+    initDestinyActivityModifierDefinition: async ({ state, commit }) => {
+      const { DestinyActivityModifierDefinition } = state.destinyManifest;
+      const { data } = await getJson(`${PREFIX_URL}${DestinyActivityModifierDefinition}`);
+      commit('setDestinyActivityModifierDefinition', data);
+    },
+    initMilestone: async ({ commit }) => {
+      const res = await getPublicMilestones();
+      commit('setPublicMilestones', res.data.Response);
     },
   },
   modules: {
