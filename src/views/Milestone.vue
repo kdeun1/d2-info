@@ -2,14 +2,7 @@
   <div class="home">
     <h3>주간 리셋</h3>
     <br>
-    <el-button
-      v-show="isError"
-      @click="refreshMilestone"
-    >
-      주간 리셋 리프레쉬
-    </el-button>
-    <br>
-    갱신 시간 : {{ currentTime }}
+    갱신 시간 : {{ apiStatus.currentTime }}
     <br>
     주간 리셋 시간
     <el-tooltip
@@ -20,9 +13,12 @@
     >
       <i class="el-icon-alarm-clock" />
     </el-tooltip>
-    : {{ weeklyRange }}
+    : {{ apiStatus.weeklyRange }}
     <br><hr><br>
-    <div v-if="!isError">
+    <div
+      v-loading="!apiStatus.isFinish"
+      class="milestone-body"
+    >
       milestone : {{ milestone }}
       <hr>
       <div
@@ -33,16 +29,14 @@
         <br><br>
       </div>
     </div>
-    <div v-else>
-      <p>현재 정상적으로 주간리셋 데이터를 가져오지 못했습니다.</p>
-      <br>
-      <p>주간 리셋 리프레쉬 버튼을 다시 클릭해주세요!</p>
-    </div>
   </div>
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue';
+import {
+  ref, reactive, computed,
+  onMounted, onBeforeMount,
+} from 'vue';
 import { useStore } from 'vuex';
 import { acceptMilestoneHash, getFormatDate, weeklyDateRange } from '@/common';
 
@@ -52,48 +46,58 @@ export default {
   },
   setup() {
     const store = useStore();
-    const isError = ref(false);
     const milestone = ref({});
-    const computedMilestone = computed(() => Object.values(milestone.value)
+    const apiStatus = reactive({
+      currentTime: '',
+      weeklyRange: '',
+      isFinish: false,
+    });
+    let timer;
+
+    const computedMilestone = computed(() => Object.values(milestone.value || {})
       .filter((v) => acceptMilestoneHash.includes(v.milestoneHash)));
-    const currentTime = ref('');
-    const weeklyRange = ref('');
 
     const initMilestone = async () => {
       try {
-        await store.dispatch('initMilestone');
-        milestone.value = store.getters.getPublicMilestones;
+        const isPublicMilestones = store.getters['milestone/isPublicMilestones'];
+        if (!isPublicMilestones) {
+          await store.dispatch('milestone/initMilestone');
+          clearTimeout(timer);
+        }
+        apiStatus.isFinish = true;
+        milestone.value = store.getters['milestone/getPublicMilestones'];
       } catch (e) {
-        isError.value = true;
-        console.log(`[initMilestone] ${e}`);
+        console.log(`[Milestone.vue] initMilestone : ${e}`);
+        timer = setTimeout(() => {
+          initMilestone();
+        }, 5000);
       } finally {
-        currentTime.value = getFormatDate(new Date());
-        weeklyRange.value = weeklyDateRange(new Date());
+        apiStatus.currentTime = getFormatDate(new Date());
+        apiStatus.weeklyRange = weeklyDateRange(new Date());
       }
-    };
-
-    const refreshMilestone = () => {
-      isError.value = false;
-      initMilestone();
     };
 
     onMounted(() => {
       initMilestone();
     });
 
+    onBeforeMount(() => {
+      clearTimeout(timer);
+    });
+
     return {
-      isError,
       milestone,
       computedMilestone,
-      refreshMilestone,
-      currentTime,
-      weeklyRange,
+      apiStatus,
     };
   },
 };
 </script>
 
 <style lang="scss">
+.milestone-body {
+  min-height: 300px;
+}
 .el-icon-alarm-clock {
   cursor: pointer;
 }

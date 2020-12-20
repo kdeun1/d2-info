@@ -1,26 +1,24 @@
 import { createStore } from 'vuex';
-import { getDestinyManifest, getPublicMilestones, getJson } from '@/api/methods';
+import createPersistedState from 'vuex-persistedstate';
+import { getDestinyManifest, getJson } from '@/api/methods';
+import milestone from './modules/milestone';
 
 const PREFIX_URL = 'https://www.bungie.net';
 
 export default createStore({
   state: {
-    destinyManifest: {}, // DB URL이 들어있는 객체
-    destinyMilestoneDefinition: {},
-    destinyActivityDefinition: {},
-    destinyActivityModifierDefinition: {},
-    publicMilestones: {},
+    destinyManifest: null, // DB URL이 들어있는 객체
+    destinyMilestoneDefinition: null,
+    destinyActivityDefinition: null,
+    destinyActivityModifierDefinition: null,
   },
   getters: {
     getDestinyManifest: (state) => state.destinyManifest,
-    getPublicMilestones: (state) => state.publicMilestones,
+    isDestinyManifest: (state) => !!state.destinyManifest,
   },
   mutations: {
     setDestinyManifest: (state, obj) => {
       state.destinyManifest = obj;
-    },
-    setPublicMilestones: (state, obj) => {
-      state.publicMilestones = obj;
     },
     setDestinyMilestoneDefinition: (state, obj) => {
       state.destinyMilestoneDefinition = obj;
@@ -53,11 +51,17 @@ export default createStore({
       const { data } = await getJson(`${PREFIX_URL}${DestinyActivityModifierDefinition}`);
       commit('setDestinyActivityModifierDefinition', data);
     },
-    initMilestone: async ({ commit }) => {
-      const res = await getPublicMilestones();
-      commit('setPublicMilestones', res.data.Response);
-    },
   },
   modules: {
+    milestone,
   },
+  plugins: [createPersistedState({
+    paths: [
+      'destinyManifest',
+      'destinyMilestoneDefinition',
+      'destinyActivityDefinition',
+      'destinyActivityModifierDefinition',
+      'milestone.publicMilestones',
+    ],
+  })],
 });

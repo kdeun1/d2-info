@@ -1,6 +1,15 @@
 <template>
   <div class="loading">
-    LOADINGLOADINGLOADINGLOADINGLOADINGLOADINGLOADINGLOADINGLOADINGLOADING
+    <h3>LOADING...</h3>
+    <br><br><br>
+    <p>현재 데이터를 가져오는 중입니다.</p>
+    <br><br>
+    <img src="@/style/loading.gif">
+    <br><br>
+    <p>bungie.net이 접속이 안되거나, API 호출 에러가 나는 경우에는 접속이 안될 수 있습니다.</p>
+    <br><br>
+    <p>권장사항 : Chrome 브라우저</p>
+    <br>
   </div>
 </template>
 
@@ -10,7 +19,6 @@ export default {
   props: {
   },
   setup() {
-    console.log('LoadingComp');
   },
 };
 </script>
