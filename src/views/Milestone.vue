@@ -19,9 +19,14 @@
       v-loading="!apiStatus.isFinish"
       class="milestone-body"
     >
-      <nightfall-box />
-      <vanguard-box />
-      <crucible-box />
+      <div
+        v-if="apiStatus.isFinish"
+        class="milestone-box-wrapper"
+      >
+        <nightfall-box />
+        <vanguard-box />
+        <crucible-box />
+      </div>
     </div>
   </div>
 </template>
@@ -29,7 +34,7 @@
 <script>
 import {
   ref, reactive, computed,
-  onMounted, onBeforeMount,
+  onBeforeMount,
 } from 'vue';
 import { useStore } from 'vuex';
 import { acceptMilestoneHash, getFormatDate, weeklyDateRange } from '@/common';
@@ -86,9 +91,7 @@ export default {
       };
     };
 
-    onMounted(() => {
-      initMilestone();
-    });
+    initMilestone();
 
     onBeforeMount(() => {
       clearTimeout(timer);
@@ -110,5 +113,8 @@ export default {
 }
 .el-icon-alarm-clock {
   cursor: pointer;
+}
+.milestone-box-wrapper {
+
 }
 </style>

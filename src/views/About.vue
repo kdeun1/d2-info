@@ -1,17 +1,14 @@
 <template>
   <div class="about">
     <h1>테스트 페이지</h1>
-    <nightfall-box />
+    <div>contents</div>
   </div>
 </template>
 
 <script>
-import NightfallBox from '@/components/NightfallBox';
-
 export default {
   name: 'About',
   components: {
-    NightfallBox,
   },
   setup() {
   },

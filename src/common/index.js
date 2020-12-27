@@ -4,14 +4,6 @@ const acceptMilestoneHash = [
   3312774044,
 ];
 
-/*  용어
-  Nightfall: The Ordeal: Adept
-  Nightfall: The Ordeal: Hero
-  Nightfall: The Ordeal: Legend
-  Nightfall: The Ordeal: Master
-  Nightfall: The Ordeal: Grandmaster
- */
-
 const hashProperty = {
   // 실각한 자
   2136458564: null, // adept
