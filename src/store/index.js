@@ -14,6 +14,12 @@ export default createStore({
   },
   getters: {
     getDestinyManifest: (state) => state.destinyManifest,
+    getDestinyMilestoneDefinitionByKey: (state) => (key) => state
+      .destinyMilestoneDefinition[key],
+    getDestinyActivityDefinitionByKey: (state) => (key) => state
+      .destinyActivityDefinition[key],
+    getDestinyActivityModifierDefinitionByKey: (state) => (key) => state
+      .destinyActivityModifierDefinition[key],
     isDestinyManifest: (state) => !!state.destinyManifest,
   },
   mutations: {

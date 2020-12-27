@@ -23,7 +23,7 @@
 <script>
 import { reactive, onBeforeMount } from 'vue';
 import { useStore } from 'vuex';
-import router from '@/router';
+// import router from '@/router';
 import LoadingComp from '@/components/LoadingComp';
 
 export default {
@@ -48,7 +48,7 @@ export default {
           clearTimeout(timer);
         }
         apiStatus.isFinish = true;
-        await router.push({ path: '/milestone' });
+        // await router.push({ path: '/milestone' });
       } catch (e) {
         console.log(`[App.vue] initManifest : ${e}`);
         timer = setTimeout(() => {
@@ -71,6 +71,14 @@ export default {
 </script>
 
 <style lang="scss">
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  user-select: none;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
 }
@@ -97,6 +105,14 @@ nav {
 }
 
 main {
+  width: 1140px;
+  margin: 0 auto;
+}
 
+@media (max-width: 1025px) {
+  main {
+    width: 100%;
+    margin: 0 auto;
+  }
 }
 </style>

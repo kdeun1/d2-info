@@ -17,6 +17,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
+    'no-plusplus': 'off',
     'no-param-reassign': ['error', {
       props: true,
       ignorePropertyModificationsFor: [

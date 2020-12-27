@@ -7,6 +7,7 @@ export default {
   },
   getters: {
     getPublicMilestones: (state) => state.publicMilestones,
+    getPublicMilestonesByKey: (state) => (key) => state.publicMilestones[key],
     isPublicMilestones: (state) => !!state.publicMilestones,
   },
   mutations: {

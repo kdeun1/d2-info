@@ -19,15 +19,9 @@
       v-loading="!apiStatus.isFinish"
       class="milestone-body"
     >
-      milestone : {{ milestone }}
-      <hr>
-      <div
-        v-for="list in computedMilestone"
-        :key="list.milestoneHash"
-      >
-        {{ list }}
-        <br><br>
-      </div>
+      <nightfall-box />
+      <vanguard-box />
+      <crucible-box />
     </div>
   </div>
 </template>
@@ -39,10 +33,16 @@ import {
 } from 'vue';
 import { useStore } from 'vuex';
 import { acceptMilestoneHash, getFormatDate, weeklyDateRange } from '@/common';
+import NightfallBox from '@/components/NightfallBox';
+import VanguardBox from '@/components/VanguardBox';
+import CrucibleBox from '@/components/CrucibleBox';
 
 export default {
   name: 'Milestone',
   components: {
+    NightfallBox,
+    VanguardBox,
+    CrucibleBox,
   },
   setup() {
     const store = useStore();
@@ -77,6 +77,15 @@ export default {
       }
     };
 
+    const getDisplayProperty = (hash) => {
+      const { displayProperties } = store.getters.getDestinyMilestoneDefinitionByKey(hash);
+      return {
+        name: displayProperties.name,
+        description: displayProperties.description,
+        icon: displayProperties.icon,
+      };
+    };
+
     onMounted(() => {
       initMilestone();
     });
@@ -89,6 +98,7 @@ export default {
       milestone,
       computedMilestone,
       apiStatus,
+      getDisplayProperty,
     };
   },
 };
