@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav v-loading="!apiStatus.isFinish">
     <router-link to="/">
       HOME
     </router-link> |
@@ -23,7 +23,7 @@
 <script>
 import { reactive, onBeforeMount } from 'vue';
 import { useStore } from 'vuex';
-// import router from '@/router';
+import { getDestinyManifest } from '@/api/methods';
 import LoadingComp from '@/components/LoadingComp';
 
 export default {
@@ -39,16 +39,19 @@ export default {
 
     const initManifest = async () => {
       try {
+        const res = await getDestinyManifest();
+        const { version } = res.data.Response;
         const { isDestinyManifest } = store.getters;
-        if (!isDestinyManifest) {
+        const localStorageVersion = store.getters.getDestiny2ManifestVersion;
+        if (!isDestinyManifest || (version !== localStorageVersion)) {
           await store.dispatch('initManifest');
+          await store.commit('setDestiny2ManifestVersion', version);
           await store.dispatch('initDestinyMilestoneDefinition');
           await store.dispatch('initDestinyActivityDefinition');
           await store.dispatch('initDestinyActivityModifierDefinition');
           clearTimeout(timer);
         }
         apiStatus.isFinish = true;
-        // await router.push({ path: '/milestone' });
       } catch (e) {
         console.log(`[App.vue] initManifest : ${e}`);
         timer = setTimeout(() => {

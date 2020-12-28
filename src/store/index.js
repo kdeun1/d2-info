@@ -7,12 +7,15 @@ const PREFIX_URL = 'https://www.bungie.net';
 
 export default createStore({
   state: {
+    destiny2ManifestVersion: null,
     destinyManifest: null, // DB URL이 들어있는 객체
     destinyMilestoneDefinition: null,
     destinyActivityDefinition: null,
     destinyActivityModifierDefinition: null,
   },
   getters: {
+    getDestiny2ManifestVersion: (state) => state.destiny2ManifestVersion,
+    isDestinyManifest: (state) => !!state.destinyManifest,
     getDestinyManifest: (state) => state.destinyManifest,
     getDestinyMilestoneDefinitionByKey: (state) => (key) => state
       .destinyMilestoneDefinition[key],
@@ -20,9 +23,11 @@ export default createStore({
       .destinyActivityDefinition[key],
     getDestinyActivityModifierDefinitionByKey: (state) => (key) => state
       .destinyActivityModifierDefinition[key],
-    isDestinyManifest: (state) => !!state.destinyManifest,
   },
   mutations: {
+    setDestiny2ManifestVersion: (state, ver) => {
+      state.destiny2ManifestVersion = ver;
+    },
     setDestinyManifest: (state, obj) => {
       state.destinyManifest = obj;
     },
@@ -63,10 +68,12 @@ export default createStore({
   },
   plugins: [createPersistedState({
     paths: [
+      'destiny2ManifestVersion',
       'destinyManifest',
       'destinyMilestoneDefinition',
       'destinyActivityDefinition',
       'destinyActivityModifierDefinition',
+      'milestone.timestamp',
       'milestone.publicMilestones',
     ],
   })],

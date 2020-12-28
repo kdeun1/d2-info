@@ -261,6 +261,7 @@ const lpad = (num) => {
 };
 
 const getFormatDate = (date) => {
+  if (!date) return null;
   const year = date.getFullYear();
   const month = lpad(1 + date.getMonth());
   const day = lpad(date.getDate());
