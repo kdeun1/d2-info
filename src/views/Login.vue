@@ -1,21 +1,18 @@
 <template>
   <div class="about">
-    <h1>로긴 성공하고 오는 페이지</h1>
+    <h1>로그인 페이지</h1>
     <div>contents</div>
   </div>
 </template>
 
 <script>
-import { getToken } from '@/api/auth';
-
 export default {
-  name: 'About',
+  name: 'Login',
   components: {
   },
   setup() {
-    const init = async () => {
-      const res = await getToken();
-      console.log(`About res : ${res}`);
+    const init = () => {
+      window.location.href = `${process.env.VUE_APP_OAUTH_URL}?client_id=${process.env.VUE_APP_OAUTH_CLIENT_ID}&response_type=code`;
     };
 
     init();

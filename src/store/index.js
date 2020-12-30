@@ -2,6 +2,7 @@ import { createStore } from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 import { getDestinyManifest, getJson } from '@/api/methods';
 import milestone from './modules/milestone';
+import auth from './modules/auth';
 
 const PREFIX_URL = 'https://www.bungie.net';
 
@@ -65,6 +66,7 @@ export default createStore({
   },
   modules: {
     milestone,
+    auth,
   },
   plugins: [createPersistedState({
     paths: [
@@ -73,8 +75,7 @@ export default createStore({
       'destinyMilestoneDefinition',
       'destinyActivityDefinition',
       'destinyActivityModifierDefinition',
-      'milestone.timestamp',
-      'milestone.publicMilestones',
+      'auth.authCode',
     ],
   })],
 });

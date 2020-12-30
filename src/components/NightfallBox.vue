@@ -102,19 +102,19 @@ export default {
 
     const levelArr = [
       {
-        label: '영웅',
+        label: '영웅 1220',
         value: 'hero',
       },
       {
-        label: '전설',
+        label: '전설 1250',
         value: 'legend',
       },
       {
-        label: '마스터',
+        label: '마스터 1280',
         value: 'master',
       },
       {
-        label: '그랜드마스터',
+        label: '그랜드마스터 1300',
         value: 'grandMaster',
       },
     ];

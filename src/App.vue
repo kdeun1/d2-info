@@ -1,18 +1,18 @@
 <template>
-  <nav v-loading="!apiStatus.isFinish">
+  <nav v-loading="!apiStatus.finishManifest || !apiStatus.finishMilestone">
     <router-link to="/">
       HOME
     </router-link> |
     <router-link to="/milestone">
       주간 리셋
     </router-link> |
-    <router-link to="/about">
-      About
-    </router-link>
+    <!--    <router-link to="/login">-->
+    <!--      로그인 페이지-->
+    <!--    </router-link>-->
   </nav>
   <main>
     <router-view
-      v-if="apiStatus.isFinish"
+      v-if="apiStatus.finishManifest && apiStatus.finishMilestone"
     />
     <loading-comp
       v-else
@@ -33,9 +33,11 @@ export default {
   setup() {
     const store = useStore();
     const apiStatus = reactive({
-      isFinish: false,
+      finishManifest: false,
+      finishMilestone: false,
     });
     let timer;
+    let milestoneTimer;
 
     const initManifest = async () => {
       try {
@@ -51,19 +53,39 @@ export default {
           await store.dispatch('initDestinyActivityModifierDefinition');
           clearTimeout(timer);
         }
-        apiStatus.isFinish = true;
+        apiStatus.finishManifest = true;
       } catch (e) {
         console.log(`[App.vue] initManifest : ${e}`);
         timer = setTimeout(() => {
           initManifest();
-        }, 5000);
+        }, 3000);
       }
     };
 
-    initManifest();
+    const initMilestone = async () => {
+      try {
+        await store.dispatch('milestone/initMilestone');
+        await store.commit('milestone/setTimestamp', new Date());
+        clearTimeout(milestoneTimer);
+        apiStatus.finishMilestone = true;
+      } catch (e) {
+        console.log(`[App.vue] initMilestone : ${e}`);
+        milestoneTimer = setTimeout(() => {
+          initMilestone();
+        }, 3000);
+      }
+    };
+
+    const init = async () => {
+      await initManifest();
+      await initMilestone();
+    };
+
+    init();
 
     onBeforeMount(() => {
       clearTimeout(timer);
+      clearTimeout(milestoneTimer);
     });
 
     return {

@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>로긴 성공하고 오는 페이지</h1>
+    <h1>로그인 리다이렉트 페이지</h1>
     <div>contents</div>
   </div>
 </template>
@@ -9,12 +9,13 @@
 import { getToken } from '@/api/auth';
 
 export default {
-  name: 'About',
+  name: 'LoginRedirect',
   components: {
   },
   setup() {
     const init = async () => {
       const res = await getToken();
+      debugger;
       console.log(`About res : ${res}`);
     };
 

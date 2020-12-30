@@ -49,10 +49,13 @@ export default {
     const { activities } = store.getters['milestone/getPublicMilestonesByKey'](props.modelValue);
 
     const crucibleHashToName = {
-      1717505396: 'control',
-      1957660400: 'elimination',
-      2259621230: 'rumble',
-      540869524: 'clash',
+      1717505396: 'control', // 점령
+      1957660400: 'elimination', // 제거
+      2259621230: 'rumble', // 난투
+      540869524: 'clash', // 격돌
+      3847433434: 'mayhem', // 아수라장
+      1683791010: 'ironBanner', // 강철깃발
+      142028034: 'showdown', // 대결
     };
 
     const modifierInfo = computed(() => activities.reduce((acc, cur) => {
@@ -119,6 +122,15 @@ export default {
   }
   &.clash {
     background-image: url('../style/icons/crucible/clash.png');
+  }
+  &.mayhem {
+    background-image: url('../style/icons/crucible/mayhem.png');
+  }
+  &.ironBanner {
+    background-image: url('../style/icons/crucible/ironBanner.png');
+  }
+  &.showdown {
+
   }
 }
 </style>

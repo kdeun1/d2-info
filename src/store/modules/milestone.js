@@ -3,7 +3,7 @@ import { getPublicMilestones } from '@/api/methods';
 export default {
   namespaced: true,
   state: {
-    timestamp: null, // milestone localstorage timestamp
+    timestamp: null,
     publicMilestones: null,
   },
   getters: {

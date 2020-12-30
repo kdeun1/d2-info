@@ -1,7 +1,6 @@
-import { defineAsyncComponent } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import LoadingComp from '@/components/LoadingComp';
 import Home from '@/views/Home';
+import store from '@/store';
 
 const routes = [
   {
@@ -12,22 +11,38 @@ const routes = [
   {
     path: '/milestone',
     name: 'Milestone',
-    // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    component: defineAsyncComponent({
-      loader: () => import(/* webpackChunkName: "milestone" */ '../views/Milestone.vue'),
-      delay: 3000,
-      loadingComponent: LoadingComp,
-    }),
+    component: () => import(/* webpackChunkName: "milestone" */ '../views/Milestone.vue'),
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
   },
   {
     path: '/about',
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
+  {
+    path: '/loginRedirect',
+    name: 'LoginRedirect',
+    component: () => import(/* webpackChunkName: "loginRedirect" */ '../views/LoginRedirect.vue'),
+    beforeEnter: (to, from, next) => {
+      if (to.query.code) {
+        store.commit('auth/setAuthCode', to.query.code);
+      }
+      next();
+    },
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'PageNotFound',
+    component: () => import(/* webpackChunkName: "pageNotFound" */ '../views/PageNotFound'),
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes,
 });
 

@@ -19,6 +19,7 @@
           'is-arc': info.hash === 3215384520,
           'is-void': info.hash === 3362074814,
           'is-solar': info.hash === 2558957669,
+          'is-stasis': info.hash === 644078431,
         }"
         :style="{
           'background-image': `url('https://www.bungie.net${info.icon}')`,
@@ -111,6 +112,9 @@ export default {
   }
   &.is-void {
     background-color: #B185DF;
+  }
+  &.is-stasis {
+    background-color: #304C9A;
   }
 }
 </style>
