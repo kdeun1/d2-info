@@ -1,4 +1,5 @@
-import { baseInstance, platformInstance } from './index';
+import axios from 'axios';
+import { platformInstance, tokenInstance } from './index';
 
 function getDestinyManifest() {
   return platformInstance.get('/Destiny2/Manifest/');
@@ -9,11 +10,16 @@ function getPublicMilestones() {
 }
 
 function getJson(url) {
-  return baseInstance.get(url);
+  return axios.get(url);
+}
+
+function getCurrentBungieNetUser() {
+  return tokenInstance.get('/User/GetCurrentBungieNetUser/');
 }
 
 export {
   getDestinyManifest,
   getPublicMilestones,
   getJson,
+  getCurrentBungieNetUser,
 };

@@ -2,7 +2,8 @@ import { createStore } from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 import { getDestinyManifest, getJson } from '@/api/methods';
 import milestone from './modules/milestone';
-import auth from './modules/auth';
+import authorization from './modules/authorization';
+import token from './modules/token';
 
 const PREFIX_URL = 'https://www.bungie.net';
 
@@ -66,16 +67,45 @@ export default createStore({
   },
   modules: {
     milestone,
-    auth,
+    authorization,
+    token,
   },
-  plugins: [createPersistedState({
-    paths: [
-      'destiny2ManifestVersion',
-      'destinyManifest',
-      'destinyMilestoneDefinition',
-      'destinyActivityDefinition',
-      'destinyActivityModifierDefinition',
-      'auth.authCode',
-    ],
-  })],
+  plugins: [
+    createPersistedState({
+      key: 'manifest',
+      paths: [
+        'destiny2ManifestVersion',
+        'destinyManifest',
+        'destinyMilestoneDefinition',
+        'destinyActivityDefinition',
+        'destinyActivityModifierDefinition',
+      ],
+    }),
+    createPersistedState({
+      key: 'milestone',
+      reducer: (state) => ({
+        timestamp: state.milestone.timestamp,
+        publicMilestones: state.milestone.publicMilestones,
+      }),
+    }),
+    createPersistedState({
+      key: 'authorization',
+      reducer: (state) => ({
+        code: state.authorization.code,
+        expiryDate: state.authorization.expiryDate,
+        type: state.authorization.type,
+      }),
+    }),
+    createPersistedState({
+      key: 'token',
+      reducer: (state) => ({
+        accessToken: state.token.accessToken,
+        accessTokenExpiryDate: state.token.accessTokenExpiryDate,
+        membershipId: state.token.membershipId,
+        refreshToken: state.token.refreshToken,
+        refreshTokenExpiryDate: state.token.refreshTokenExpiryDate,
+        tokenType: state.token.tokenType,
+      }),
+    }),
+  ],
 });

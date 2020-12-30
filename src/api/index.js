@@ -1,40 +1,30 @@
 import axios from 'axios';
+import { setInterceptors, setCodeInterceptors, setTokenInterceptors } from './interceptors';
 
-// instance & interceptor
-const create = (url = null, options = null) => {
-  const instance = axios.create(
-    { baseURL: url },
-    {
-      header: {
-        'X-API-Key': process.env.VUE_APP_API_KEY,
-      },
-      ...options,
-    },
-  );
+const create = (url) => {
+  const instance = axios.create({ baseURL: url });
+  setInterceptors(instance);
   return instance;
 };
 
-const createWithCode = () => {
-  const instance = axios.create(
-    {
-      baseURL: 'https://www.bungie.net/Platform/App/OAuth/Token',
-    },
-    {
-      headers: {
-        'X-API-Key': process.env.VUE_APP_API_KEY,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    },
-  );
+const createWithCode = (url) => {
+  const instance = axios.create({ baseURL: url });
+  setCodeInterceptors(instance);
   return instance;
 };
 
-const baseInstance = create();
+const createWithToken = (url) => {
+  const instance = axios.create({ baseURL: url });
+  setTokenInterceptors(instance);
+  return instance;
+};
+
 const platformInstance = create(process.env.VUE_APP_API_URL);
-const authInstance = createWithCode();
+const codeInstance = createWithCode(process.env.VUE_APP_OAUTH_TOKEN_URL);
+const tokenInstance = createWithToken(process.env.VUE_APP_API_URL);
 
 export {
-  baseInstance,
   platformInstance,
-  authInstance,
+  codeInstance,
+  tokenInstance,
 };

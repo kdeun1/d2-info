@@ -29,7 +29,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "loginRedirect" */ '../views/LoginRedirect.vue'),
     beforeEnter: (to, from, next) => {
       if (to.query.code) {
-        store.commit('auth/setAuthCode', to.query.code);
+        store.commit('authorization/setAuthCode', to.query.code);
+        next('/loginRedirect');
       }
       next();
     },

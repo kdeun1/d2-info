@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { getToken } from '@/api/auth';
+import { genToken } from '@/api/auth';
 
 export default {
   name: 'About',
@@ -14,7 +14,7 @@ export default {
   },
   setup() {
     const init = async () => {
-      const res = await getToken();
+      const res = await genToken();
       console.log(`About res : ${res}`);
     };
 

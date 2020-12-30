@@ -23,6 +23,7 @@
 <script>
 import { reactive, onBeforeMount } from 'vue';
 import { useStore } from 'vuex';
+import { isRefreshLocalStorage } from '@/common';
 import { getDestinyManifest } from '@/api/methods';
 import LoadingComp from '@/components/LoadingComp';
 
@@ -64,15 +65,27 @@ export default {
 
     const initMilestone = async () => {
       try {
-        await store.dispatch('milestone/initMilestone');
-        await store.commit('milestone/setTimestamp', new Date());
-        clearTimeout(milestoneTimer);
+        const milestoneTimestamp = store.getters['milestone/getTimestamp'];
+        if (!milestoneTimestamp) {
+          await store.dispatch('milestone/initMilestone');
+          await store.commit('milestone/setTimestamp', new Date());
+          clearTimeout(milestoneTimer);
+        } else {
+          const milestoneDate = new Date(milestoneTimestamp);
+          const isRefresh = isRefreshLocalStorage(milestoneDate);
+          const isPublicMilestones = store.getters['milestone/isPublicMilestones'];
+          if (!isPublicMilestones || isRefresh) {
+            await store.dispatch('milestone/initMilestone');
+            await store.commit('milestone/setTimestamp', new Date());
+            clearTimeout(milestoneTimer);
+          }
+        }
         apiStatus.finishMilestone = true;
       } catch (e) {
         console.log(`[App.vue] initMilestone : ${e}`);
         milestoneTimer = setTimeout(() => {
           initMilestone();
-        }, 3000);
+        }, 4000);
       }
     };
 

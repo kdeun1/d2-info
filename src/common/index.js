@@ -253,6 +253,37 @@ const hashProperty = {
   557845334: null,
 };
 
+const isRefreshLocalStorage = (timestamp) => {
+  const currentTimestamp = new Date();
+  const currentDateTime = {
+    date: currentTimestamp.getDate(),
+    hour: currentTimestamp.getHours(),
+    min: currentTimestamp.getMinutes(),
+    ms: currentTimestamp.getTime(),
+    totalMin: currentTimestamp.getHours() * 60 + currentTimestamp.getMinutes(),
+  };
+  const targetDateTime = {
+    date: timestamp.getDate(),
+    hour: timestamp.getHours(),
+    min: timestamp.getMinutes(),
+    ms: timestamp.getTime(),
+    totalMin: timestamp.getHours() * 60 + timestamp.getMinutes(),
+  };
+  if (currentDateTime.ms - targetDateTime.ms > 86400000) {
+    return true;
+  }
+  if (currentDateTime.date !== targetDateTime.date) {
+    return true;
+  }
+  if (currentDateTime.hour > 2 && targetDateTime.hour < 2) {
+    return true;
+  }
+  if (currentDateTime.totalMin > 150 && targetDateTime.totalMin <= 150) {
+    return true;
+  }
+  return false;
+};
+
 const lpad = (num) => {
   if (num >= 10) {
     return num;
@@ -317,6 +348,7 @@ const weeklyDateRange = (date) => {
 export {
   acceptMilestoneHash,
   hashProperty,
+  isRefreshLocalStorage,
   getFormatDate,
   weeklyDateRange,
 };

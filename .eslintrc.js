@@ -29,6 +29,7 @@ module.exports = {
         'request', // for Express requests
         'res', // for Express responses
         'response', // for Express responses
+        'config', // for axios interceptors
       ],
     }],
     'vue/comment-directive': 'off',
