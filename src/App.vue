@@ -1,108 +1,37 @@
 <template>
-  <nav v-loading="!apiStatus.finishManifest || !apiStatus.finishMilestone">
-    <router-link to="/">
+  <nav>
+    <a @click="clickMenu('')">
       HOME
-    </router-link> |
-    <router-link to="/milestone">
+    </a> |
+    <a @click="clickMenu('Milestone')">
       주간 리셋
-    </router-link> |
-    <!--    <router-link to="/login">-->
-    <!--      로그인 페이지-->
-    <!--    </router-link>-->
+    </a> |
   </nav>
   <main>
-    <router-view
-      v-if="apiStatus.finishManifest && apiStatus.finishMilestone"
-    />
-    <loading-comp
-      v-else
-    />
+    <router-view v-slot="{ Component, route }">
+      <keep-alive>
+        <component
+          :is="Component"
+          v-bind="route.params"
+        />
+      </keep-alive>
+    </router-view>
   </main>
 </template>
 
 <script>
-import { reactive, onBeforeMount } from 'vue';
-import { useStore } from 'vuex';
-import { isRefreshLocalStorage } from '@/common';
-import { getDestinyManifest } from '@/api/methods';
-import LoadingComp from '@/components/LoadingComp';
+import router from '@/router';
 
 export default {
   components: {
-    LoadingComp,
   },
   setup() {
-    const store = useStore();
-    const apiStatus = reactive({
-      finishManifest: false,
-      finishMilestone: false,
-    });
-    let timer;
-    let milestoneTimer;
-
-    const initManifest = async () => {
-      try {
-        const res = await getDestinyManifest();
-        const { version } = res.data.Response;
-        const { isDestinyManifest } = store.getters;
-        const localStorageVersion = store.getters.getDestiny2ManifestVersion;
-        if (!isDestinyManifest || (version !== localStorageVersion)) {
-          await store.dispatch('initManifest');
-          await store.commit('setDestiny2ManifestVersion', version);
-          await store.dispatch('initDestinyMilestoneDefinition');
-          await store.dispatch('initDestinyActivityDefinition');
-          await store.dispatch('initDestinyActivityModifierDefinition');
-          clearTimeout(timer);
-        }
-        apiStatus.finishManifest = true;
-      } catch (e) {
-        console.log(`[App.vue] initManifest : ${e}`);
-        timer = setTimeout(() => {
-          initManifest();
-        }, 3000);
-      }
+    const clickMenu = (menuName) => {
+      router.push(`/${menuName}`);
     };
-
-    const initMilestone = async () => {
-      try {
-        const milestoneTimestamp = store.getters['milestone/getTimestamp'];
-        if (!milestoneTimestamp) {
-          await store.dispatch('milestone/initMilestone');
-          await store.commit('milestone/setTimestamp', new Date());
-          clearTimeout(milestoneTimer);
-        } else {
-          const milestoneDate = new Date(milestoneTimestamp);
-          const isRefresh = isRefreshLocalStorage(milestoneDate);
-          const isPublicMilestones = store.getters['milestone/isPublicMilestones'];
-          if (!isPublicMilestones || isRefresh) {
-            await store.dispatch('milestone/initMilestone');
-            await store.commit('milestone/setTimestamp', new Date());
-            clearTimeout(milestoneTimer);
-          }
-        }
-        apiStatus.finishMilestone = true;
-      } catch (e) {
-        console.log(`[App.vue] initMilestone : ${e}`);
-        milestoneTimer = setTimeout(() => {
-          initMilestone();
-        }, 4000);
-      }
-    };
-
-    const init = async () => {
-      await initManifest();
-      await initMilestone();
-    };
-
-    init();
-
-    onBeforeMount(() => {
-      clearTimeout(timer);
-      clearTimeout(milestoneTimer);
-    });
 
     return {
-      apiStatus,
+      clickMenu,
     };
   },
 };
