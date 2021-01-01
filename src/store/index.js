@@ -4,6 +4,7 @@ import { getDestinyManifest, getJson } from '@/api/methods';
 import milestone from './modules/milestone';
 import authorization from './modules/authorization';
 import token from './modules/token';
+import user from './modules/user';
 
 const PREFIX_URL = 'https://www.bungie.net';
 
@@ -69,6 +70,7 @@ export default createStore({
     milestone,
     authorization,
     token,
+    user,
   },
   plugins: [
     createPersistedState({
@@ -83,10 +85,10 @@ export default createStore({
     }),
     createPersistedState({
       key: 'milestone',
-      reducer: (state) => ({
-        timestamp: state.milestone.timestamp,
-        publicMilestones: state.milestone.publicMilestones,
-      }),
+      paths: [
+        'milestone.timestamp',
+        'milestone.publicMilestones',
+      ],
     }),
     createPersistedState({
       key: 'authorization',
@@ -98,14 +100,22 @@ export default createStore({
     }),
     createPersistedState({
       key: 'token',
-      reducer: (state) => ({
-        accessToken: state.token.accessToken,
-        accessTokenExpiryDate: state.token.accessTokenExpiryDate,
-        membershipId: state.token.membershipId,
-        refreshToken: state.token.refreshToken,
-        refreshTokenExpiryDate: state.token.refreshTokenExpiryDate,
-        tokenType: state.token.tokenType,
-      }),
+      paths: [
+        'token.accessToken',
+        'token.accessTokenExpiryDate',
+        'token.membershipId',
+        'token.refreshToken',
+        'token.refreshTokenExpiryDate',
+        'token.tokenType',
+      ],
+    }),
+    createPersistedState({
+      key: 'user',
+      paths: [
+        'user.currentBungieNetUser',
+        'user.bungieAccount',
+        'user.currentMembershipType',
+      ],
     }),
   ],
 });

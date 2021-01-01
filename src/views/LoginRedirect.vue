@@ -1,58 +1,70 @@
 <template>
-  <div class="about">
-    <h1>로그인 리다이렉트 페이지</h1>
-    <div>contents</div>
-    <br>
-    <button @click="a">
-      TEST 'getCurrentBungieNetUser'
-    </button>
-    <br><br><br><br>
-    <div>
-      val : {{ val }}
-    </div>
+  <div class="contents">
+    <loading-comp />
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
 import { useStore } from 'vuex';
+import router from '@/router';
 import { genToken } from '@/api/auth';
-import { getCurrentBungieNetUser } from '@/api/methods';
+import { getCurrentBungieNetUser, getBungieAccount } from '@/api/methods';
+import LoadingComp from '@/components/LoadingComp';
 
 export default {
   name: 'LoginRedirect',
   components: {
+    LoadingComp,
   },
   setup() {
     const store = useStore();
 
-    const init = async () => {
-      const { data } = await genToken();
-      await store.commit('token/setToken', data);
-      await store.commit('authorization/deleteAuth');
-      console.log(`About res : ${data}`);
+    const getToken = async () => {
+      try {
+        const { data } = await genToken();
+        await store.commit('token/setToken', data);
+        await store.commit('authorization/deleteAuth');
+      } catch (e) {
+        console.log(`[LoginRedirect.vue] getToken : ${e}`);
+      }
     };
 
-    const val = ref(null);
-    const a = async () => {
-      debugger;
-      val.value = await getCurrentBungieNetUser();
-      console.log(val.value);
+    const getCurrentUserInfo = async () => {
+      try {
+        const { data } = await getCurrentBungieNetUser();
+        await store.commit('user/setCurrentBungieNetUser', data.Response);
+      } catch (e) {
+        console.log(`[LoginRedirect.vue] getCurrentUserInfo : ${e}`);
+      }
+    };
+
+    const getBungieAccountInfo = async () => {
+      try {
+        const { data } = await getBungieAccount();
+        await store.commit('user/setBungieAccount', data.Response.destinyMemberships);
+      } catch (e) {
+        console.log(`[LoginRedirect.vue] getBungieAccountInfo : ${e}`);
+      }
+    };
+
+    const init = async () => {
+      try {
+        await getToken();
+        await getCurrentUserInfo();
+        await getBungieAccountInfo();
+        await router.push({ name: 'MyPage' });
+      } catch (e) {
+        console.log(`[LoginRedirect.vue] init : ${e}`);
+      }
     };
 
     init();
 
     return {
-      a,
-      val,
     };
   },
 };
 </script>
 
 <style lang="scss">
-.milestone-box-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
 </style>

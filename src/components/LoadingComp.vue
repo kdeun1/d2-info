@@ -2,7 +2,7 @@
   <div class="loading">
     <h3>LOADING...</h3>
     <br><br><br>
-    <p>현재 데이터를 가져오는 중입니다.</p>
+    <p>현재 로그인 정보를 가져오는 중입니다.</p>
     <br><br>
     <img src="@/style/loading.gif">
     <br><br>

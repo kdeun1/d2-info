@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="contents">
     <h3>주간 리셋</h3>
     <br>
     <div v-if="milestoneFormatDate">
@@ -18,7 +18,6 @@
       </el-tooltip>
       : {{ milestoneWeeklyRange }}
     </div>
-
     <br><hr><br>
     <div class="milestone-body">
       <div class="milestone-box-wrapper">
@@ -73,6 +72,8 @@ export default {
   cursor: pointer;
 }
 .milestone-box-wrapper {
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>

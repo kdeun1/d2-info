@@ -1,11 +1,11 @@
 <template>
   <div
     v-loading="!apiStatus.finishManifest || !apiStatus.finishMilestone"
-    class="home"
+    class="contents"
   >
     <h3>HOME</h3>
     <br><br><br>
-    <div>최초 접속 시 번지넷과의 데이터 통신으로 인해 로딩이 오래걸릴 수 있습니다.</div>
+    <div>최초 접속 시 번지넷과의 데이터 통신으로 인해 로딩이 존재합니다.</div>
     <br><br><br>
     <div>한국 시간 새벽2시 전후로 로딩이 오래 걸릴 수 있습니다.</div>
     <br><br><br>
@@ -18,8 +18,6 @@
     </el-button>
     <br><br><br>
     <div>Created by. 더강이</div>
-    <br><br><br>
-    <div>Github Source: https://github.com/kdeun1/d2-info</div>
   </div>
 </template>
 
