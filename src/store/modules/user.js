@@ -20,7 +20,7 @@ export default {
       state.currentMembershipType = membershipType;
     },
     setBungieAccount: (state, infoArr) => {
-      if (!infoArr.length) {
+      if (infoArr.length) {
         state.currentMembershipType = infoArr[0].membershipType;
       }
       state.bungieAccount = infoArr;

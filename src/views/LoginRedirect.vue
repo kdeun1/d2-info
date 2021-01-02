@@ -24,6 +24,7 @@ export default {
         const { data } = await genToken();
         await store.commit('token/setToken', data);
         await store.commit('authorization/deleteAuth');
+        await localStorage.removeItem('authorization');
       } catch (e) {
         console.log(`[LoginRedirect.vue] getToken : ${e}`);
       }

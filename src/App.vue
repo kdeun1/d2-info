@@ -21,7 +21,15 @@
           :class="{ 'is-select': currentMenu === 'Setting' }"
           @click="clickMenu('Setting')"
         >
-          Setting
+          설정
+        </div>
+        <div
+          v-if="userDisplayName"
+          class="nav-menu"
+          :class="{ 'is-select': currentMenu === 'MyPage' }"
+          @click="clickMenu('MyPage')"
+        >
+          MyPage
         </div>
         <div
           v-if="!userDisplayName"
@@ -193,6 +201,7 @@ nav {
   width: 100px;
   height: 70px;
   line-height: 70px;
+  box-sizing: border-box;
   cursor: pointer;
 
   &:hover {
@@ -264,6 +273,16 @@ main {
 }
 
 .contents {
-  padding: 30px 0;
+  padding: 50px 10px 30px;
+
+  > h2 {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .contents-body {
+    padding: 30px 0;
+    text-align: left;
+  }
 }
 </style>

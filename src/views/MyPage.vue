@@ -1,7 +1,7 @@
 <template>
   <div class="contents">
-    <h3>마이 페이지</h3>
-    <div>
+    <h2>마이 페이지</h2>
+    <div class="contents-body">
       contents
     </div>
   </div>

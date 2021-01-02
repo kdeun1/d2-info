@@ -3,21 +3,24 @@
     v-loading="!apiStatus.finishManifest || !apiStatus.finishMilestone"
     class="contents"
   >
-    <h3>HOME</h3>
-    <br><br><br>
-    <div>최초 접속 시 번지넷과의 데이터 통신으로 인해 로딩이 존재합니다.</div>
-    <br><br><br>
-    <div>한국 시간 새벽2시 전후로 로딩이 오래 걸릴 수 있습니다.</div>
-    <br><br><br>
-    <el-button @click.once="getManifest">
-      Manifest 데이터 다시 가져오기
-    </el-button>
-    <br><br><br>
-    <el-button @click.once="getMilestone">
-      Milestone 데이터 다시 가져오기
-    </el-button>
-    <br><br><br>
-    <div>Created by. 더강이</div>
+    <h2>HOME</h2>
+    <div class="contents-body">
+      <p>최초 접속 시 번지넷과의 데이터 통신으로 인해 로딩이 존재합니다.</p>
+      <br><br>
+      <p>해당 사이트는 PC 기준 최신버전 크롬 브라우저를 권장합니다.</p>
+      <br><br>
+      <p>한국 시간 새벽2시 전후로 로딩이 오래 걸릴 수 있습니다.</p>
+      <br><br>
+      <el-button @click.once="getManifest">
+        Manifest 데이터 다시 가져오기
+      </el-button>
+      <br><br><br>
+      <el-button @click.once="getMilestone">
+        Milestone 데이터 다시 가져오기
+      </el-button>
+      <br><br><br>
+      <p>Created by. 더강이</p>
+    </div>
   </div>
 </template>
 

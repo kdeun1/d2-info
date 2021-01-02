@@ -17,7 +17,6 @@ export default {
       state.code = null;
       state.expiryDate = 0;
       state.type = 'public';
-      localStorage.removeItem('authorization');
     },
   },
   actions: {

@@ -43,6 +43,14 @@ export default createStore({
     setDestinyActivityModifierDefinition: (state, obj) => {
       state.destinyActivityModifierDefinition = obj;
     },
+    deleteAllState: (state) => {
+      state.destiny2ManifestVersion = null;
+      state.destinyManifest = null;
+      state.destinyMilestoneDefinition = null;
+      state.destinyActivityDefinition = null;
+      state.destinyActivityModifierDefinition = null;
+      localStorage.removeItem('manifest');
+    },
   },
   actions: {
     initManifest: async ({ commit }) => {
