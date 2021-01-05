@@ -5,6 +5,7 @@ import milestone from './modules/milestone';
 import authorization from './modules/authorization';
 import token from './modules/token';
 import user from './modules/user';
+import profile from './modules/profile';
 
 const PREFIX_URL = 'https://www.bungie.net';
 
@@ -79,6 +80,7 @@ export default createStore({
     authorization,
     token,
     user,
+    profile,
   },
   plugins: [
     createPersistedState({
@@ -123,6 +125,17 @@ export default createStore({
         'user.currentBungieNetUser',
         'user.bungieAccount',
         'user.currentMembershipType',
+        'user.membershipsForCurrentUser',
+      ],
+    }),
+    createPersistedState({
+      key: 'profile',
+      paths: [
+        'profile.profile',
+        'profile.profileCurrencies',
+        'profile.profileInventory',
+        'profile.characters',
+        'profile.currentCharacterId',
       ],
     }),
   ],

@@ -19,8 +19,37 @@ function getCurrentBungieNetUser() {
 }
 
 function getBungieAccount() {
+  // const membershipId = '4611686018485555033';
   const { membershipId } = store.getters['user/getCurrentBungieNetUser'];
   return platformInstance.get(`/User/GetBungieAccount/${membershipId}/254/`);
+}
+
+function getMembershipsForCurrentUser() {
+  return tokenInstance.get('/User/getMembershipsForCurrentUser/');
+}
+
+function getProfileCurrenciesInventory() {
+  const membershipsForCurrentUser = store.getters['user/getMembershipsForCurrentUser'];
+  const membership = membershipsForCurrentUser
+    .find((v) => v.LastSeenDisplayNameType === v.membershipType)
+    || { membershipId: null, membershipType: null };
+  const { membershipId, membershipType } = membership;
+  return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/?components=102,103`);
+}
+
+function getProfile() {
+  // const membershipType = store.getters['user/getCurrentMembershipType'];
+  // const { membershipId } = store.getters['user/getCurrentBungieNetUser'];
+  const membershipsForCurrentUser = store.getters['user/getMembershipsForCurrentUser'];
+  const membership = membershipsForCurrentUser
+    .find((v) => v.LastSeenDisplayNameType === v.membershipType)
+    || { membershipId: null, membershipType: null };
+  const { membershipId, membershipType } = membership;
+  // const membershipId = '4611686018485555033';
+  // const membershipType = 3;
+  // eslint-disable-next-line max-len
+  // return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/?components=100,102,103,104,200,201,202,204,205,300,301,302,303,304,305,306,307,308,309,310,700,800,900,1000,1100`);
+  return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/?components=100,102,103,200`);
 }
 
 // getCurrentBungieNetUser 결과와 동일
@@ -38,6 +67,9 @@ export {
   getJson,
   getCurrentBungieNetUser,
   getBungieAccount,
+  getMembershipsForCurrentUser,
+  getProfileCurrenciesInventory,
+  getProfile,
   getBungieNetUserById,
   getVendors,
 };

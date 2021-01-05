@@ -8,7 +8,7 @@
 import { useStore } from 'vuex';
 import router from '@/router';
 import { genToken } from '@/api/auth';
-import { getCurrentBungieNetUser, getBungieAccount } from '@/api/methods';
+import { getCurrentBungieNetUser, getBungieAccount, getMembershipsForCurrentUser } from '@/api/methods';
 import LoadingComp from '@/components/LoadingComp';
 
 export default {
@@ -48,11 +48,22 @@ export default {
       }
     };
 
+    const getMembershipsForCurrentUserInfo = async () => {
+      try {
+        const { data } = await getMembershipsForCurrentUser();
+        await store.commit('user/setMembershipsForCurrentUser', data.Response.destinyMemberships);
+      } catch (e) {
+        console.log(`[LoginRedirect.vue] getMembershipsForCurrentUserInfo : ${e}`);
+      }
+    };
+
     const init = async () => {
       try {
         await getToken();
         await getCurrentUserInfo();
         await getBungieAccountInfo();
+        await getMembershipsForCurrentUserInfo();
+        await localStorage.removeItem('authorization');
         await router.push({ name: 'MyPage' });
       } catch (e) {
         console.log(`[LoginRedirect.vue] init : ${e}`);

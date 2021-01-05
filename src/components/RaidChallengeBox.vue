@@ -5,7 +5,7 @@
   >
     <template #label>
       <div class="raid-challenge-label">
-        랜덤 맵
+        매 주마다 변경
       </div>
     </template>
     <template #property />
