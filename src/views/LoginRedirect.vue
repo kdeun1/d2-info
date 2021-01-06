@@ -23,8 +23,7 @@ export default {
       try {
         const { data } = await genToken();
         await store.commit('token/setToken', data);
-        await store.commit('authorization/deleteAuth');
-        await localStorage.removeItem('authorization');
+        // await localStorage.removeItem('authorization');
       } catch (e) {
         console.log(`[LoginRedirect.vue] getToken : ${e}`);
       }
@@ -63,7 +62,7 @@ export default {
         await getCurrentUserInfo();
         await getBungieAccountInfo();
         await getMembershipsForCurrentUserInfo();
-        await localStorage.removeItem('authorization');
+        // await localStorage.removeItem('authorization');
         await router.push({ name: 'MyPage' });
       } catch (e) {
         console.log(`[LoginRedirect.vue] init : ${e}`);

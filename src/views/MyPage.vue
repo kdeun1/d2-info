@@ -44,7 +44,11 @@
           :key="key"
           :info="info"
           :hash="key"
+          :class="{ 'is-select': selectedCharacterId === key }"
         />
+      </div>
+      <div class="my-page-area">
+        sdf
       </div>
     </div>
   </div>
@@ -69,6 +73,7 @@ export default {
 
     const bungieAccounts = computed(() => store.getters['user/getBungieAccount']);
     const currentAccount = computed(() => store.getters['user/getCurrentBungieAccount']);
+    const selectedCharacterId = computed(() => store.getters['profile/getCharacterId']);
 
     const characters = ref({});
 
@@ -94,6 +99,7 @@ export default {
       platformList,
       bungieAccounts,
       currentAccount,
+      selectedCharacterId,
       characters,
       getPlatformName,
       clickAccount,

@@ -26,6 +26,19 @@
       {{ quantity[name] }}
     </div>
   </div>
+  <div class="currencies-card-area">
+    <div
+      v-for="name in extraMaterials"
+      :key="name"
+      class="currencies-card"
+    >
+      <div
+        class="currencies-icon"
+        :class="name"
+      />
+      {{ quantity[name] }}
+    </div>
+  </div>
 </template>
 
 <script>
@@ -78,6 +91,16 @@ export default {
       'heliumFilaments',
       'spinmetalLeaves',
       'glacialStarwort',
+    ]);
+    const extraMaterials = ref([
+      'darkFragment',
+      'enhancementCore',
+      'enhancementPrism',
+      'ascendantShard',
+      'upgradeModule',
+      'spoilsOfConquest',
+      'raidBanner',
+      'herealwaysPiece',
     ]);
 
     const init = async () => {
@@ -142,6 +165,7 @@ export default {
     return {
       quantity,
       localMaterials,
+      extraMaterials,
     };
   },
 };
@@ -216,6 +240,31 @@ export default {
   }
   &.glacialStarwort {
     background-image: url('../style/icons/currency/glacialStarwort.jpg');
+  }
+
+  &.darkFragment {
+    background-image: url('../style/icons/currency/darkFragment.jpg');
+  }
+  &.enhancementCore {
+    background-image: url('../style/icons/currency/enhancementCore.jpg');
+  }
+  &.enhancementPrism {
+    background-image: url('../style/icons/currency/enhancementPrism.jpg');
+  }
+  &.ascendantShard {
+    background-image: url('../style/icons/currency/ascendantShard.jpg');
+  }
+  &.upgradeModule {
+    background-image: url('../style/icons/currency/upgradeModule.jpg');
+  }
+  &.spoilsOfConquest {
+    background-image: url('../style/icons/currency/spoilsOfConquest.jpg');
+  }
+  &.raidBanner {
+    background-image: url('../style/icons/currency/raidBanner.jpg');
+  }
+  &.herealwaysPiece {
+    background-image: url('../style/icons/currency/herealwaysPiece.jpg');
   }
 }
 </style>

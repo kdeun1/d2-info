@@ -9,15 +9,11 @@
       <br><br>
       <p>해당 사이트는 PC 기준 최신버전 크롬 브라우저를 권장합니다.</p>
       <br><br>
+      <p>로그인을 하면 주간 리셋 정보를 볼 수 있습니다.</p>
+      <br><br>
       <p>한국 시간 새벽2시 전후로 로딩이 오래 걸릴 수 있습니다.</p>
       <br><br>
-      <el-button @click.once="getManifest">
-        Manifest 데이터 다시 가져오기
-      </el-button>
-      <br><br><br>
-      <el-button @click.once="getMilestone">
-        Milestone 데이터 다시 가져오기
-      </el-button>
+      <p>데이터 갱신이 이상한 경우 '설정' 메뉴로 가셔서 데이터 삭제 후 F5 눌러주세요.</p>
       <br><br><br>
       <p>Created by. 더강이</p>
     </div>

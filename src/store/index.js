@@ -100,14 +100,14 @@ export default createStore({
         'milestone.publicMilestones',
       ],
     }),
-    createPersistedState({
-      key: 'authorization',
-      reducer: (state) => ({
-        code: state.authorization.code,
-        expiryDate: state.authorization.expiryDate,
-        type: state.authorization.type,
-      }),
-    }),
+    // createPersistedState({
+    //   key: 'authorization',
+    //   reducer: (state) => ({
+    //     code: state.authorization.code,
+    //     expiryDate: state.authorization.expiryDate,
+    //     type: state.authorization.type,
+    //   }),
+    // }),
     createPersistedState({
       key: 'token',
       paths: [

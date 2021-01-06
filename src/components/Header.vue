@@ -24,7 +24,7 @@
           설정
         </div>
         <div
-          v-if="userDisplayName"
+          v-if="isAuth"
           class="nav-menu"
           :class="{ 'is-select': currentMenu === 'MyPage' }"
           @click="clickMenu('MyPage')"
@@ -32,7 +32,7 @@
           MyPage
         </div>
         <div
-          v-if="!userDisplayName"
+          v-if="!isAuth"
           class="nav-menu user"
           @click="redirectLoginPage"
         >
@@ -84,6 +84,7 @@ export default {
 
     const currentMenu = computed(() => router.currentRoute.value.name);
     const userDisplayName = computed(() => store.getters['user/getCurrentBungieNetUser']?.displayName);
+    const isAuth = computed(() => store.getters['authorization/isAuth']);
 
     const clickMenu = (menuName) => {
       router.push({ name: `${menuName}` });
@@ -92,6 +93,7 @@ export default {
       window.location.href = `${process.env.VUE_APP_OAUTH_URL}?client_id=${process.env.VUE_APP_OAUTH_CLIENT_ID}&response_type=code`;
     };
     const clickLogout = async () => {
+      await store.commit('authorization/deleteAuth');
       await localStorage.removeItem('user');
       await localStorage.removeItem('token');
       await clickMenu('Setting');
@@ -100,6 +102,7 @@ export default {
     return {
       currentMenu,
       userDisplayName,
+      isAuth,
       clickMenu,
       redirectLoginPage,
       clickLogout,

@@ -20,6 +20,8 @@ export default {
         profile, profileCurrencies, profileInventory, characters,
       } = res;
       state.profile = profile.data;
+      const [firstCharacterId] = profile.data.characterIds;
+      state.currentCharacterId = firstCharacterId;
       state.profileCurrencies = profileCurrencies.data;
       state.profileInventory = profileInventory.data;
       state.characters = characters.data;
