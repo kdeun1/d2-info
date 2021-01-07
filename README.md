@@ -20,6 +20,9 @@ npm run build
 npm run lint
 ```
 
+### site
+https://d2-info.web.app/
+
 ### What I want to do (구현하고 싶은 목록)
 
 1) Vuex modulariztion of required manifests after bungie.net API analysis. (번지넷 API 분석 후 필요한 manifest를 vuex 모듈화)
