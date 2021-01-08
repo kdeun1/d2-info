@@ -48,7 +48,9 @@
         />
       </div>
       <div class="my-page-area">
-        sdf
+        <character-activities-area
+          :character-hash="selectedCharacterId"
+        />
       </div>
     </div>
   </div>
@@ -60,12 +62,14 @@ import { useStore } from 'vuex';
 import { getProfile } from '@/api/methods';
 import CharacterCard from '@/components/CharacterCard';
 import ProfileCurrenciesArea from '@/components/ProfileCurrenciesArea';
+import CharacterActivitiesArea from '@/components/CharacterActivitiesArea';
 
 export default {
   name: 'MyPage',
   components: {
     CharacterCard,
     ProfileCurrenciesArea,
+    CharacterActivitiesArea,
   },
   setup() {
     const store = useStore();

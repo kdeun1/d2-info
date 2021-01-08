@@ -61,11 +61,13 @@ export default {
     const modifierInfo = computed(() => activities.reduce((acc, cur) => {
       const { displayProperties } = store.getters
         .getDestinyActivityDefinitionByKey(cur.activityHash);
-      acc.push({
-        ...displayProperties,
-        hash: cur.activityHash,
-        className: crucibleHashToName[cur.activityHash] || null,
-      });
+      if (Object.keys(crucibleHashToName).includes(cur.activityHash.toString())) {
+        acc.push({
+          ...displayProperties,
+          hash: cur.activityHash,
+          className: crucibleHashToName[cur.activityHash] || null,
+        });
+      }
       return acc;
     }, []));
 
@@ -130,7 +132,7 @@ export default {
     background-image: url('../style/icons/crucible/ironBanner.png');
   }
   &.showdown {
-
+    background-image: url('../style/icons/crucible/showdown.png');
   }
 }
 </style>

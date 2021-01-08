@@ -37,6 +37,15 @@ function getProfileCurrenciesInventory() {
   return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/?components=102,103`);
 }
 
+function getCharacterActivities(characterId) {
+  const membershipsForCurrentUser = store.getters['user/getMembershipsForCurrentUser'];
+  const membership = membershipsForCurrentUser
+    .find((v) => v.LastSeenDisplayNameType === v.membershipType)
+    || { membershipId: null, membershipType: null };
+  const { membershipId, membershipType } = membership;
+  return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/Character/${characterId}/?components=204`);
+}
+
 function getProfile() {
   // const membershipType = store.getters['user/getCurrentMembershipType'];
   // const { membershipId } = store.getters['user/getCurrentBungieNetUser'];
@@ -69,6 +78,7 @@ export {
   getBungieAccount,
   getMembershipsForCurrentUser,
   getProfileCurrenciesInventory,
+  getCharacterActivities,
   getProfile,
   getBungieNetUserById,
   getVendors,
