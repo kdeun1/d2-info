@@ -1,6 +1,6 @@
 <template>
   <div class="character-activities-area">
-    sdf
+    CharacterActivitiesArea
   </div>
 </template>
 

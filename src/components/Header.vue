@@ -11,20 +11,13 @@
         </div>
         <div
           class="nav-menu"
-          :class="{ 'is-select': currentMenu === 'Milestone' }"
-          @click="clickMenu('Milestone')"
-        >
-          주간 리셋
-        </div>
-        <div
-          class="nav-menu"
           :class="{ 'is-select': currentMenu === 'Setting' }"
           @click="clickMenu('Setting')"
         >
           설정
         </div>
         <div
-          v-if="isAuth"
+          v-if="existToken"
           class="nav-menu"
           :class="{ 'is-select': currentMenu === 'MyPage' }"
           @click="clickMenu('MyPage')"
@@ -32,7 +25,15 @@
           MyPage
         </div>
         <div
-          v-if="!isAuth"
+          v-if="existToken"
+          class="nav-menu"
+          :class="{ 'is-select': currentMenu === 'Milestone' }"
+          @click="clickMenu('Milestone')"
+        >
+          주간 리셋
+        </div>
+        <div
+          v-if="!existToken"
           class="nav-menu user"
           @click="redirectLoginPage"
         >
@@ -84,7 +85,7 @@ export default {
 
     const currentMenu = computed(() => router.currentRoute.value.name);
     const userDisplayName = computed(() => store.getters['user/getCurrentBungieNetUser']?.displayName);
-    const isAuth = computed(() => store.getters['authorization/isAuth']);
+    const existToken = computed(() => store.getters['token/existToken']);
 
     const clickMenu = (menuName) => {
       router.push({ name: `${menuName}` });
@@ -94,15 +95,15 @@ export default {
     };
     const clickLogout = async () => {
       await store.commit('authorization/deleteAuth');
+      await store.commit('token/initToken');
       await localStorage.removeItem('user');
-      await localStorage.removeItem('token');
       await clickMenu('Setting');
     };
 
     return {
       currentMenu,
       userDisplayName,
-      isAuth,
+      existToken,
       clickMenu,
       redirectLoginPage,
       clickLogout,

@@ -12,7 +12,7 @@ export default {
   mutations: {
     setAuthCode: (state, code) => {
       state.code = code;
-      state.expiryDate = new Date().getTime() + 5 * 60 * 1000;
+      state.expiryDate = new Date().getTime() + 60 * 60 * 1000;
     },
     deleteAuth: (state) => { state.code = null; },
   },

@@ -10,12 +10,17 @@ export default {
   },
   getters: {
     getToken: (state) => state.accessToken,
+    getTokenExpiryDate: (state) => state.accessTokenExpiryDate,
+    existToken: (state) => !!state.accessToken,
   },
   mutations: {
     setToken: (state, data) => {
       state.accessToken = data.access_token;
-      state.accessTokenExpiryDate = new Date().getTime() + 5 * 60 * 1000;
+      state.accessTokenExpiryDate = new Date().getTime() + 60 * 60 * 1000;
       state.membershipId = data.membership_id;
+    },
+    initToken: (state) => {
+      state.accessToken = null;
     },
   },
   actions: {

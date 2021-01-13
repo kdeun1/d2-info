@@ -102,11 +102,10 @@ export default createStore({
     }),
     // createPersistedState({
     //   key: 'authorization',
-    //   reducer: (state) => ({
-    //     code: state.authorization.code,
-    //     expiryDate: state.authorization.expiryDate,
-    //     type: state.authorization.type,
-    //   }),
+    //   paths: [
+    //     'authorization.code',
+    //     'authorization.expiryDate',
+    //   ],
     // }),
     createPersistedState({
       key: 'token',
@@ -135,6 +134,7 @@ export default createStore({
         'profile.profileCurrencies',
         'profile.profileInventory',
         'profile.characters',
+        'profile.characterActivities',
         'profile.currentCharacterId',
       ],
     }),

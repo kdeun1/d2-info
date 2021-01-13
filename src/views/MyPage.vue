@@ -49,6 +49,13 @@
       </div>
       <div class="my-page-area">
         <character-activities-area
+          v-if="false"
+          :character-hash="selectedCharacterId"
+        />
+      </div>
+      <div class="my-page-area">
+        <vendors-area
+          v-if="false"
           :character-hash="selectedCharacterId"
         />
       </div>
@@ -63,6 +70,7 @@ import { getProfile } from '@/api/methods';
 import CharacterCard from '@/components/CharacterCard';
 import ProfileCurrenciesArea from '@/components/ProfileCurrenciesArea';
 import CharacterActivitiesArea from '@/components/CharacterActivitiesArea';
+import VendorsArea from '@/components/VendorsArea';
 
 export default {
   name: 'MyPage',
@@ -70,6 +78,7 @@ export default {
     CharacterCard,
     ProfileCurrenciesArea,
     CharacterActivitiesArea,
+    VendorsArea,
   },
   setup() {
     const store = useStore();

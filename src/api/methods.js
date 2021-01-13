@@ -46,6 +46,17 @@ function getCharacterActivities(characterId) {
   return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/Character/${characterId}/?components=204`);
 }
 
+function getVendors(characterId) {
+  const membershipsForCurrentUser = store.getters['user/getMembershipsForCurrentUser'];
+  const membership = membershipsForCurrentUser
+    .find((v) => v.LastSeenDisplayNameType === v.membershipType)
+    || { membershipId: null, membershipType: null };
+  const { membershipId, membershipType } = membership;
+  // eslint-disable-next-line max-len
+  // return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/Character/${characterId}/Vendors/?components=101,300,301,304,305,306,307,308,309,310,400,402,600`);
+  return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/Character/${characterId}/Vendors/?components=402`);
+}
+
 function getProfile() {
   // const membershipType = store.getters['user/getCurrentMembershipType'];
   // const { membershipId } = store.getters['user/getCurrentBungieNetUser'];
@@ -58,16 +69,12 @@ function getProfile() {
   // const membershipType = 3;
   // eslint-disable-next-line max-len
   // return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/?components=100,102,103,104,200,201,202,204,205,300,301,302,303,304,305,306,307,308,309,310,700,800,900,1000,1100`);
-  return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/?components=100,102,103,200`);
+  return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${membershipId}/?components=100,102,103,200,202,204`);
 }
 
 // getCurrentBungieNetUser 결과와 동일
 function getBungieNetUserById(membershipId) {
   return tokenInstance.get(`/User/GetBungieNetUserById/${membershipId}`);
-}
-
-function getVendors(membershipType, destinyMembershipId) {
-  return tokenInstance.get(`/Destiny2/${membershipType}/Profile/${destinyMembershipId}`);
 }
 
 export {
@@ -79,7 +86,7 @@ export {
   getMembershipsForCurrentUser,
   getProfileCurrenciesInventory,
   getCharacterActivities,
+  getVendors,
   getProfile,
   getBungieNetUserById,
-  getVendors,
 };

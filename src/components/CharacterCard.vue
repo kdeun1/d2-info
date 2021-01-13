@@ -13,7 +13,10 @@
         {{ info.light }}
       </div>
     </div>
-    <div class="character-detail-area">
+    <div
+      v-if="!shortMode"
+      class="character-detail-area"
+    >
       <div>
         <h3>최근 접속한 시간</h3>
         <p>{{ getDateLastPlayed(info.dateLastPlayed) }}</p>
@@ -45,6 +48,10 @@ export default {
     hash: {
       type: String,
       default: '',
+    },
+    shortMode: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
@@ -101,7 +108,9 @@ export default {
     };
 
     onMounted(() => {
-      drawChart();
+      if (!props.shortMode) {
+        drawChart();
+      }
     });
 
     const classToName = (classHash) => {

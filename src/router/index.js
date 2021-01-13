@@ -37,6 +37,15 @@ const routes = [
     path: '/myPage',
     name: 'MyPage',
     component: () => import(/* webpackChunkName: "myPage" */ '../views/MyPage.vue'),
+    beforeEnter: (to, from, next) => {
+      const currentDateTime = new Date().getTime();
+      const accessTokenExpiryDate = store.getters['token/getTokenExpiryDate'];
+      if (currentDateTime > accessTokenExpiryDate) {
+        store.commit('token/initToken');
+        next('/');
+      }
+      next();
+    },
   },
   {
     path: '/:catchAll(.*)',

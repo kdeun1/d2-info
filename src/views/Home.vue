@@ -13,6 +13,8 @@
       <br><br>
       <p>한국 시간 새벽2시 전후로 로딩이 오래 걸릴 수 있습니다.</p>
       <br><br>
+      <p>우측 상단에 '로그인'을 해야 정상적으로 데이터를 볼 수 있습니다.</p>
+      <br><br>
       <p>데이터 갱신이 이상한 경우 '설정' 메뉴로 가셔서 데이터 삭제 후 F5 눌러주세요.</p>
       <br><br><br>
       <p>Created by. 더강이</p>
@@ -37,22 +39,6 @@ export default {
     let timer;
     let milestoneTimer;
 
-    const getManifest = async () => {
-      try {
-        await store.dispatch('initManifest');
-        await store.dispatch('initDestinyMilestoneDefinition');
-        await store.dispatch('initDestinyActivityDefinition');
-        await store.dispatch('initDestinyActivityModifierDefinition');
-        clearTimeout(timer);
-        apiStatus.finishManifest = true;
-      } catch (e) {
-        console.log(`[App.vue] getManifest : ${e}`);
-        timer = setTimeout(() => {
-          getManifest();
-        }, 3000);
-      }
-    };
-
     const initManifest = async () => {
       try {
         const res = await getDestinyManifest();
@@ -73,20 +59,6 @@ export default {
         timer = setTimeout(() => {
           initManifest();
         }, 3000);
-      }
-    };
-
-    const getMilestone = async () => {
-      try {
-        await store.dispatch('milestone/initMilestone');
-        await store.commit('milestone/setTimestamp', new Date());
-        clearTimeout(milestoneTimer);
-        apiStatus.finishMilestone = true;
-      } catch (e) {
-        console.log(`[App.vue] getMilestone : ${e}`);
-        milestoneTimer = setTimeout(() => {
-          getMilestone();
-        }, 4000);
       }
     };
 
@@ -125,8 +97,6 @@ export default {
 
     return {
       apiStatus,
-      getManifest,
-      getMilestone,
     };
   },
 };
