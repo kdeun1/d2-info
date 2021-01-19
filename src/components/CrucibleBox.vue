@@ -30,7 +30,7 @@
 <script>
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import MilestoneBox from '@/components/MilestoneBox';
+import MilestoneBox from '@/components/common/MilestoneBox';
 
 export default {
   name: 'CrucibleBox',

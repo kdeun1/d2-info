@@ -84,7 +84,7 @@
 import { reactive, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { hashProperty } from '@/common';
-import MilestoneBox from '@/components/MilestoneBox';
+import MilestoneBox from '@/components/common/MilestoneBox';
 
 export default {
   name: 'EmpireHuntBox',

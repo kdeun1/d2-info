@@ -35,7 +35,7 @@
 
 <script>
 import { useStore } from 'vuex';
-import MilestoneBox from '@/components/MilestoneBox';
+import MilestoneBox from '@/components/common/MilestoneBox';
 import { ref, computed } from 'vue';
 
 export default {

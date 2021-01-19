@@ -36,7 +36,7 @@
 
 <script>
 import { ref, computed } from 'vue';
-import MilestoneBox from '@/components/MilestoneBox';
+import MilestoneBox from '@/components/common/MilestoneBox';
 
 export default {
   name: 'RaidChallengeBox',
@@ -129,25 +129,31 @@ export default {
       {
         name: '마지막 소원',
         className: 'lastWish',
-        week: Math.ceil((currentDateTime - firstWeekDateTime.lastWish) / ONE_WEEK_MS),
+        week: Math.ceil((currentDateTime - firstWeekDateTime.lastWish) / ONE_WEEK_MS)
+          % lastWishChallenge.length,
         challenge: lastWishChallenge[
           Math.floor((currentDateTime - firstWeekDateTime.lastWish) / ONE_WEEK_MS)
+          % lastWishChallenge.length
         ],
       },
       {
         name: '구원의 정원',
         className: 'gardenOfSalvation',
-        week: Math.ceil((currentDateTime - firstWeekDateTime.gardenOfSalvation) / ONE_WEEK_MS),
+        week: Math.ceil((currentDateTime - firstWeekDateTime.gardenOfSalvation) / ONE_WEEK_MS)
+          % gardenOfSalvationChallenge.length,
         challenge: gardenOfSalvationChallenge[
           Math.floor((currentDateTime - firstWeekDateTime.gardenOfSalvation) / ONE_WEEK_MS)
+          % gardenOfSalvationChallenge.length
         ],
       },
       {
         name: '딥스톰 무덤',
         className: 'deepStoneCrypt',
-        week: Math.ceil((currentDateTime - firstWeekDateTime.deepStoneCrypt) / ONE_WEEK_MS),
+        week: Math.ceil((currentDateTime - firstWeekDateTime.deepStoneCrypt) / ONE_WEEK_MS)
+          % deepStoneCryptChallenge.length,
         challenge: deepStoneCryptChallenge[
           Math.floor((currentDateTime - firstWeekDateTime.deepStoneCrypt) / ONE_WEEK_MS)
+          % deepStoneCryptChallenge.length
         ],
       },
     ]);

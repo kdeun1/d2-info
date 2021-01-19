@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import MainHeader from '@/components/Header';
+import MainHeader from '@/components/common/Header';
 
 export default {
   components: {
@@ -22,19 +22,30 @@ export default {
   setup() {
   },
 };
+/* eslint-disable */
 </script>
 
 <style lang="scss">
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   padding: 0;
   margin: 0;
   border: 0;
   user-select: none;
   box-sizing: border-box;
+  font-family: 'NanumSquareRound', sans-serif;
 }
 
 body {
+  height: 100vh;
   margin: 0;
+  background-color: #eee;
 }
 
 #app {
