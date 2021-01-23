@@ -5,10 +5,15 @@
   >
     <h2>HOME</h2>
     <div class="home-body">
-      <ellipsed-zone-box icon-class="ellipsedZone" />
-      <nightmare-box icon-class="fallenCouncilNightmare" />
-      <dreaming-city-curse-box icon-class="blindWell" />
-      <dreaming-city-ascendant-box icon-class="ascendant" />
+      <ellipsed-zone-panel icon-class="ellipsedZone" />
+      <empire-hunt-panel />
+      <simulation-panel icon-class="simulation" />
+      <nightmare-panel icon-class="fallenCouncilNightmare" />
+      <dreaming-city-curse-panel icon-class="blindWell" />
+      <dreaming-city-ascendant-panel icon-class="ascendant" />
+    </div>
+    <div class="home-body">
+      <lost-sector-europa-panel icon-class="lostSector" />
     </div>
     <div>
       <br><br>
@@ -34,18 +39,24 @@ import { reactive } from 'vue';
 import { useStore } from 'vuex';
 import { getDestinyManifest } from '@/api/methods';
 import { isRefreshLocalStorage } from '@/common';
-import EllipsedZoneBox from '@/components/EllipsedZoneBox';
-import NightmareBox from '@/components/NightmareBox';
-import DreamingCityCurseBox from '@/components/DreamingCityCurseBox';
-import DreamingCityAscendantBox from '@/components/DreamingCityAscendantBox';
+import EllipsedZonePanel from '@/components/EllipsedZonePanel';
+import NightmarePanel from '@/components/NightmarePanel';
+import DreamingCityCursePanel from '@/components/DreamingCityCursePanel';
+import DreamingCityAscendantPanel from '@/components/DreamingCityAscendantPanel';
+import LostSectorEuropaPanel from '@/components/LostSectorEuropaPanel';
+import EmpireHuntPanel from '@/components/EmpireHuntPanel';
+import SimulationPanel from '@/components/SimulationPanel';
 
 export default {
   name: 'Home',
   components: {
-    EllipsedZoneBox,
-    NightmareBox,
-    DreamingCityCurseBox,
-    DreamingCityAscendantBox,
+    EllipsedZonePanel,
+    NightmarePanel,
+    DreamingCityCursePanel,
+    DreamingCityAscendantPanel,
+    LostSectorEuropaPanel,
+    EmpireHuntPanel,
+    SimulationPanel,
   },
   setup() {
     const store = useStore();
@@ -127,7 +138,7 @@ export default {
 .home-summary-box {
   position: relative;
   width: calc(33.33% - 20px);
-  height: 120px;
+  min-height: 120px;
   padding: 15px 25px;
   margin: 10px;
   text-align: left;
@@ -182,7 +193,7 @@ export default {
 
 .home-summary-row {
   position: relative;
-  height: 50px;
+  min-height: 50px;
 
   >.title {
     color: #8898aa;
@@ -215,6 +226,21 @@ export default {
   }
   &.ascendant {
     background-image: url('../style/icons/home/ascendant.png');
+  }
+  &.lostSector {
+    background-image: url('../style/icons/home/lostSector.png');
+  }
+  &.empireHuntTheDarkPriestess {
+    background-image: url('../style/icons/home/empireHuntTheDarkPriestess.jpg');
+  }
+  &.empireHuntTheTechnocrat {
+    background-image: url('../style/icons/home/empireHuntTheTechnocrat.jpg');
+  }
+  &.empireHuntTheWarrior {
+    background-image: url('../style/icons/home/empireHuntTheWarrior.jpg');
+  }
+  &.simulation {
+    background-image: url('../style/icons/home/simulation.png');
   }
 }
 </style>

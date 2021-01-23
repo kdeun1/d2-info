@@ -118,39 +118,64 @@ export default {
         value: 'grandMaster',
       },
     ];
+    const theOrdealGrandmasterHashes = [
+      54961125, // The Ordeal: Grandmaster: Exodus Crash
+      89113250, // The Ordeal: Grandmaster: Broodhold
+      207226563, // The Ordeal: Grandmaster: Lake of Shadows
+      281497220, // The Ordeal: Grandmaster: The Inverted Spire
+      554830595, // The Ordeal: Grandmaster: The Insight Terminus
+      707920309, // The Ordeal: Grandmaster: Exodus Crash
+      1446478334, // The Ordeal: Grandmaster: The Arms Dealer
+      2023667984, // The Ordeal: Grandmaster: Tree of Probabilities
+      2168858559, // The Ordeal: Grandmaster: Savathûn's Song
+      2694576755, // The Ordeal: Grandmaster: The Insight Terminus
+      3100302962, // The Ordeal: Grandmaster: The Corrupted
+      3354105309, // The Ordeal: Grandmaster: The Corrupted
+      3381711459, // The Ordeal: Grandmaster: The Disgraced
+      3449817631, // The Ordeal: Grandmaster: The Scarlet Keep
+      3455414851, // The Ordeal: Grandmaster: The Festering Core
+      3597372938, // The Ordeal: Grandmaster: Warden of Nothing
+      3726640183, // The Ordeal: Grandmaster: The Arms Dealer
+      3871967157, // The Ordeal: Grandmaster: Warden of Nothing
+      3879949581, // The Ordeal: Grandmaster: Broodhold
+      3919254032, // The Ordeal: Grandmaster: Lake of Shadows
+      4197461112, // The Ordeal: Grandmaster: The Glassway
+    ];
     const currentLevelIdx = ref(2);
     const modifierIdx = ref(0);
     const { activities } = store.getters['milestone/getPublicMilestonesByKey'](props.modelValue);
+    const validActivities = activities.filter((v) => !theOrdealGrandmasterHashes
+      .includes(v.activityHash));
 
     const currentLevel = computed(() => levelArr[currentLevelIdx.value]);
     const milestoneInfo = reactive({
       hero: {
-        activityHash: activities[1].activityHash,
-        hashProperty: hashProperty[activities[1].activityHash],
+        activityHash: validActivities[1].activityHash,
+        hashProperty: hashProperty[validActivities[1].activityHash],
         definition: store.getters
-          .getDestinyActivityDefinitionByKey(activities[1].activityHash),
-        modifierHashes: activities[1].modifierHashes,
+          .getDestinyActivityDefinitionByKey(validActivities[1].activityHash),
+        modifierHashes: validActivities[1].modifierHashes,
       },
       legend: {
-        activityHash: activities[2].activityHash,
-        hashProperty: hashProperty[activities[2].activityHash],
+        activityHash: validActivities[2].activityHash,
+        hashProperty: hashProperty[validActivities[2].activityHash],
         definition: store.getters
-          .getDestinyActivityDefinitionByKey(activities[2].activityHash),
-        modifierHashes: activities[2].modifierHashes,
+          .getDestinyActivityDefinitionByKey(validActivities[2].activityHash),
+        modifierHashes: validActivities[2].modifierHashes,
       },
       master: {
-        activityHash: activities[3].activityHash,
-        hashProperty: hashProperty[activities[3].activityHash],
+        activityHash: validActivities[3].activityHash,
+        hashProperty: hashProperty[validActivities[3].activityHash],
         definition: store.getters
-          .getDestinyActivityDefinitionByKey(activities[3].activityHash),
-        modifierHashes: activities[3].modifierHashes,
+          .getDestinyActivityDefinitionByKey(validActivities[3].activityHash),
+        modifierHashes: validActivities[3].modifierHashes,
       },
       grandMaster: {
-        activityHash: activities[4].activityHash,
-        hashProperty: hashProperty[activities[4].activityHash],
+        activityHash: validActivities[4].activityHash,
+        hashProperty: hashProperty[validActivities[4].activityHash],
         definition: store.getters
-          .getDestinyActivityDefinitionByKey(activities[4].activityHash),
-        modifierHashes: activities[4].modifierHashes,
+          .getDestinyActivityDefinitionByKey(validActivities[4].activityHash),
+        modifierHashes: validActivities[4].modifierHashes,
       },
     });
     const currentNightfall = computed(() => milestoneInfo[currentLevel.value.value]);

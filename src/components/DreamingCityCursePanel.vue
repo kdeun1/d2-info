@@ -1,10 +1,13 @@
 <template>
-  <summary-box>
+  <summary-panel>
     <template #title>
       {{ currentInfo.curse }}
     </template>
     <template #content>
-      {{ currentInfo.blindWellBoss }} ({{ currentInfo.blindWellMonsterType }})
+      {{ currentInfo.blindWellBoss }}
+      <p class="monsterType">
+        ({{ currentInfo.blindWellMonsterType }})
+      </p>
     </template>
     <template #desc>
       {{ currentInfo.weeklyQuest }}
@@ -15,17 +18,17 @@
     <template #dlc>
       포세이큰
     </template>
-  </summary-box>
+  </summary-panel>
 </template>
 
 <script>
 import { computed } from 'vue';
-import SummaryBox from '@/components/common/SummaryBox';
+import SummaryPanel from '@/components/common/SummaryPanel';
 
 export default {
-  name: 'DreamingCityCurseBox',
+  name: 'DreamingCityCursePanel',
   components: {
-    SummaryBox,
+    SummaryPanel,
   },
   props: {
   },
@@ -35,14 +38,14 @@ export default {
       {
         curse: '저주가 약할 때',
         weeklyQuest: '수행원 처치',
-        blindWellBoss: '크라구르',
-        blindWellMonsterType: '군체',
+        blindWellBoss: '시라키스와 바르쿠우리스',
+        blindWellMonsterType: '경멸자',
       },
       {
         curse: '저주가 강할 때',
         weeklyQuest: '오라클 엔진',
-        blindWellBoss: '시라키스와 바르쿠우리스',
-        blindWellMonsterType: '경멸자',
+        blindWellBoss: '크라구르',
+        blindWellMonsterType: '군체',
       },
       {
         curse: '저주가 가장 강할 때',
@@ -65,4 +68,8 @@ export default {
 </script>
 
 <style lang="scss">
+.monsterType {
+  display: inline;
+  font-size: 10px;
+}
 </style>

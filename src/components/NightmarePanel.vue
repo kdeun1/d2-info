@@ -1,5 +1,5 @@
 <template>
-  <summary-box>
+  <summary-panel>
     <template #title>
       악몽사냥
     </template>
@@ -22,17 +22,17 @@
     <template #dlc>
       그림자 요새
     </template>
-  </summary-box>
+  </summary-panel>
 </template>
 
 <script>
 import { computed } from 'vue';
-import SummaryBox from '@/components/common/SummaryBox';
+import SummaryPanel from '@/components/common/SummaryPanel';
 
 export default {
-  name: 'NightmareZoneBox',
+  name: 'NightmareZonePanel',
   components: {
-    SummaryBox,
+    SummaryPanel,
   },
   props: {
   },

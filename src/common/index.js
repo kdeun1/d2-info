@@ -309,6 +309,7 @@ const hashProperty = {
     unstoppable: 0,
     description: '',
   },
+  // 전사 - 파일랙스
   4173217516: null,
   4173217519: {
     arc: 12,

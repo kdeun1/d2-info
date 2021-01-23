@@ -1,5 +1,5 @@
 <template>
-  <summary-box>
+  <summary-panel>
     <template #title>
       일식지역
     </template>
@@ -12,17 +12,17 @@
     <template #dlc>
       빛의 저편
     </template>
-  </summary-box>
+  </summary-panel>
 </template>
 
 <script>
 import { computed } from 'vue';
-import SummaryBox from '@/components/common/SummaryBox';
+import SummaryPanel from '@/components/common/SummaryPanel';
 
 export default {
-  name: 'EllipsedZoneBox',
+  name: 'EllipsedZonePanel',
   components: {
-    SummaryBox,
+    SummaryPanel,
   },
   props: {
   },

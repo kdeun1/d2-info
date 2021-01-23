@@ -129,8 +129,8 @@ export default {
       {
         name: '마지막 소원',
         className: 'lastWish',
-        week: Math.ceil((currentDateTime - firstWeekDateTime.lastWish) / ONE_WEEK_MS)
-          % lastWishChallenge.length,
+        week: (Math.floor((currentDateTime - firstWeekDateTime.lastWish) / ONE_WEEK_MS)
+          % lastWishChallenge.length) + 1,
         challenge: lastWishChallenge[
           Math.floor((currentDateTime - firstWeekDateTime.lastWish) / ONE_WEEK_MS)
           % lastWishChallenge.length
@@ -139,8 +139,8 @@ export default {
       {
         name: '구원의 정원',
         className: 'gardenOfSalvation',
-        week: Math.ceil((currentDateTime - firstWeekDateTime.gardenOfSalvation) / ONE_WEEK_MS)
-          % gardenOfSalvationChallenge.length,
+        week: (Math.floor((currentDateTime - firstWeekDateTime.gardenOfSalvation) / ONE_WEEK_MS)
+          % gardenOfSalvationChallenge.length) + 1,
         challenge: gardenOfSalvationChallenge[
           Math.floor((currentDateTime - firstWeekDateTime.gardenOfSalvation) / ONE_WEEK_MS)
           % gardenOfSalvationChallenge.length
@@ -149,8 +149,8 @@ export default {
       {
         name: '딥스톰 무덤',
         className: 'deepStoneCrypt',
-        week: Math.ceil((currentDateTime - firstWeekDateTime.deepStoneCrypt) / ONE_WEEK_MS)
-          % deepStoneCryptChallenge.length,
+        week: (Math.floor((currentDateTime - firstWeekDateTime.deepStoneCrypt) / ONE_WEEK_MS)
+          % deepStoneCryptChallenge.length) + 1,
         challenge: deepStoneCryptChallenge[
           Math.floor((currentDateTime - firstWeekDateTime.deepStoneCrypt) / ONE_WEEK_MS)
           % deepStoneCryptChallenge.length

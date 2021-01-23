@@ -1,10 +1,15 @@
 <template>
   <div class="home-summary-box">
     <div class="home-summary-row">
-      <div
-        class="home-summary-icon"
-        :class="iconClass"
-      />
+      <template v-if="!$slots.icon">
+        <div
+          class="home-summary-icon"
+          :class="iconClass"
+        />
+      </template>
+      <template v-else>
+        <slot name="icon" />
+      </template>
       <h4 class="title">
         <slot name="title" />
       </h4>

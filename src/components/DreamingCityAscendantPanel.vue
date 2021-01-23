@@ -1,5 +1,5 @@
 <template>
-  <summary-box>
+  <summary-panel>
     <template #title>
       승천 도전
     </template>
@@ -22,17 +22,17 @@
     <template #dlc>
       포세이큰
     </template>
-  </summary-box>
+  </summary-panel>
 </template>
 
 <script>
 import { computed } from 'vue';
-import SummaryBox from '@/components/common/SummaryBox';
+import SummaryPanel from '@/components/common/SummaryPanel';
 
 export default {
-  name: 'DreamingCityAscendantBox',
+  name: 'DreamingCityAscendantPanel',
   components: {
-    SummaryBox,
+    SummaryPanel,
   },
   props: {
   },
@@ -56,7 +56,7 @@ export default {
         desc: '부유한 발판을 타고 신전 가운데의 칼을 뽑고 기사 3마리 처치',
       },
       {
-        location: '잊혀진 희망의 만',
+        location: '사라진 희망의 만',
         desc: '지저에 떠있는 돌을 타고 내려간 뒤 신전에서 마법사 2마리 처치',
       },
       {

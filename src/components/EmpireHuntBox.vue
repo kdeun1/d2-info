@@ -3,7 +3,7 @@
     :background-image-style="{
       'background-image': `url('https://www.bungie.net${currentEmpireHuntInfo.definition.pgcrImage}')`
     }"
-    :title="`${currentEmpireHuntInfo.definition.displayProperties.name}`"
+    :title="filteredName(currentEmpireHuntInfo.definition.displayProperties.name)"
   >
     <template #label>
       <i
@@ -127,7 +127,7 @@ export default {
         legend: 2205920674,
         master: 2205920677,
       },
-      theWarrior: { // 어둠의 여사제
+      theWarrior: { // 전사
         adept: 4173217516,
         hero: 4173217519,
         legend: 4173217518,
@@ -216,6 +216,11 @@ export default {
       }
     };
 
+    const filteredName = (name) => {
+      const nameList = name.split(': ');
+      return `${nameList[0]} - ${nameList[1]}`;
+    };
+
     return {
       modifierIdx,
       currentLevel,
@@ -226,6 +231,7 @@ export default {
       currentModifierInfo,
       changeModifierIdx,
       changeLevel,
+      filteredName,
     };
   },
 };
