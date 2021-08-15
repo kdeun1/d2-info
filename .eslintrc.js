@@ -1,37 +1,30 @@
 module.exports = {
   root: true,
   env: {
-    node: true,
+    node: true
   },
-  extends: [
+  'extends': [
     'plugin:vue/vue3-essential',
-    'plugin:vue/vue3-strongly-recommended',
     'eslint:recommended',
-    'airbnb-base',
+    '@vue/typescript/recommended'
+    // 'airbnb-base'
   ],
   parserOptions: {
-    parser: 'babel-eslint',
+    ecmaVersion: 2020
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'import/no-unresolved': 'off',
-    'import/extensions': 'off',
-    'no-plusplus': 'off',
-    'no-param-reassign': ['error', {
-      props: true,
-      ignorePropertyModificationsFor: [
-        'state', // for vuex state
-        'acc', // for reduce accumulators
-        'e', // for e.returnvalue
-        'ctx',
-        'req', // for Express requests
-        'request', // for Express requests
-        'res', // for Express responses
-        'response', // for Express responses
-        'config', // for axios interceptors
-      ],
-    }],
-    'vue/comment-directive': 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
   },
-};
+  overrides: [
+    {
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)'
+      ],
+      env: {
+        jest: true
+      }
+    }
+  ]
+}
