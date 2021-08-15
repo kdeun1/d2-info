@@ -7,7 +7,7 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'eslint:recommended',
     '@vue/typescript/recommended'
-    // 'airbnb-base'
+    // 'airbnb-base' // 이거 또 안됨
   ],
   parserOptions: {
     ecmaVersion: 2020
