@@ -41,6 +41,7 @@ module.exports = {
         'config',
       ],
     }],
+    'linebreak-style': 0,
     'import/no-cycle': 'off',
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',
