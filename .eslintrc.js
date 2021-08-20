@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    jest: true,
   },
   extends: [
     'plugin:vue/vue3-essential',
@@ -42,6 +43,7 @@ module.exports = {
       ],
     }],
     'linebreak-style': 0,
+    'no-plusplus': 'off',
     'import/no-cycle': 'off',
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',
