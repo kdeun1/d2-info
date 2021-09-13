@@ -2,31 +2,47 @@
   <div class="about">
     <h1>This is an about page</h1>
     <button
-      @click="getManifestData"
+      @click="getPublicMilestones"
     >
-      클릭 시 manifest 파일을 가져옴
+      클릭 시 milestoneInfo 파일을 가져옴
     </button>
+    <br>
+    {{ milestoneInfo }}
+    <hr>
+    <button
+      @click="getTest"
+    >
+      클릭 시 realtime database 파일을 가져옴
+    </button>
+    <br>
+    <hr>
+    <button
+      @click="getDestinyActivityDefinition(2468202005)"
+    >
+      클릭 시 getDestinyActivityDefinition 데이터를 가져옴
+    </button>
+    <br>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { getDestinyManifest } from '@/api/destiny2';
+import { useMilestones } from '@/composables/useMilestones';
+import { getTest, getDestinyActivityDefinition } from '@/db/firebaseDb';
 
 export default defineComponent({
   name: 'About',
   setup() {
-    const getManifestData = async (): Promise<void> => {
-      try {
-        const { data } = await getDestinyManifest();
-        console.log(data);
-      } catch (e) {
-        console.log(`Manifest 파일을 가져오지 못했습니다 : ${e}`);
-      }
-    };
+    const {
+      milestoneInfo,
+      getPublicMilestones,
+    } = useMilestones();
 
     return {
-      getManifestData,
+      milestoneInfo,
+      getPublicMilestones,
+      getTest,
+      getDestinyActivityDefinition,
     };
   },
 });
