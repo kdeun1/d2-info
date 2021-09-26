@@ -19,7 +19,7 @@ interface MininumResponseDetails {
   ThrottleSeconds: number;
 }
 
-const createPlatformInstance = (url: string): AxiosInstance => {
+const createPlatformInstance = (url: any): AxiosInstance => {
   const instance: AxiosInstance = axios.create({
     baseURL: url,
   });
