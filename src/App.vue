@@ -117,7 +117,7 @@ header {
   width: calc(100% - #{$nav-width});
   height: $header-height;
   padding: 0 20px;
-  background-color: #eeeeee;
+  background-color: #f0f2f5;
   align-items: center;
 
   .header-icon {
@@ -164,6 +164,7 @@ main {
   display: flex;
   flex-direction: column;
   padding: 80px 0 0 $nav-width;
+  background-color: #f0f2f5;
 }
 
 @media screen and (max-width: 1024px) {
@@ -195,10 +196,14 @@ main {
   }
 }
 
+section {
+  padding: 0 20px;
+}
+
 footer {
   display: flex;
   padding: 10px 20px;
-  background-color: #f5f5f5;
+  background-color: #f0f2f5;
   gap: 20px;
 }
 
