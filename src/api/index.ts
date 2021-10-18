@@ -10,12 +10,12 @@ import { setInterceptors } from '@/api/interceptors';
  * API Details > Bungie.net Platform > Minimum Response Details
  * ref) http://destinydevs.github.io/BungieNetPlatform/docs/API-Details
  */
-interface MininumResponseDetails {
+interface MininumResponseDetails<T> {
   ErrorCode: number;
   ErrorStatus: string;
   Message: string;
   MessageData: any;
-  Response: any;
+  Response: T;
   ThrottleSeconds: number;
 }
 

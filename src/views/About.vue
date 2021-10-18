@@ -1,4 +1,5 @@
 <template>
+  <milestones />
   <div class="about">
     <h1>This is an about page</h1>
     <button
@@ -29,9 +30,11 @@
 import { defineComponent } from 'vue';
 import { useMilestones } from '@/composables/useMilestones';
 import { getTest, getDestinyActivityDefinition } from '@/db/firebaseDb';
+import Milestones from '@/components/Milestones.vue';
 
 export default defineComponent({
   name: 'About',
+  components: { Milestones },
   setup() {
     const {
       milestoneInfo,

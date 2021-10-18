@@ -1,4 +1,9 @@
 import { createStore } from 'vuex';
+import { milestones } from '@/store/modules/milestones';
+
+export interface RootState {
+  a?: any;
+}
 
 export default createStore({
   state: {
@@ -8,5 +13,6 @@ export default createStore({
   actions: {
   },
   modules: {
+    milestones,
   },
 });
